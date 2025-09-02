@@ -1,16 +1,13 @@
-# healthstat
+# Healthstat
 
-A new Flutter project.
+Comprehensive health tracker made with Flutter
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+The user will be able to input various details like calories, weight etc... from these data the app will calculate BMI and other data, from this an overall health score of the user is given
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Track calories
+- Track sport activities
+- Track mood
+- Track weight and height
+- Log diseases
