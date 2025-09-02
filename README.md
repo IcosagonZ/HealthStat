@@ -2,6 +2,11 @@
 
 Comprehensive health tracker made with Flutter
 
+## Screenshots
+<p align="center">
+    <img src="assets/screenshot0.png" alt="Screenshot 0"/>
+</p>
+
 ## Features
 
 The user will be able to input various details like calories, weight etc... from these data the app will calculate BMI and other data, from this an overall health score of the user is given
@@ -11,3 +16,14 @@ The user will be able to input various details like calories, weight etc... from
 - Track mood
 - Track weight and height
 - Log diseases
+
+## To-do
+
+- [ ] Basic UI
+- [ ] Basic functionality (adding data, removing data)
+- [ ] Database storage (in app along with food list)
+- [ ] History with graph
+- [ ] Overview data calculation (like BMI)
+- [ ] AI integration (to generate AI overviews and suggestions)
+- [ ] Database storage (online syncing)
+- [ ] Dynamic avatar (which changes according to health and mood)
