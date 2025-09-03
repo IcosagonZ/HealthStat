@@ -111,140 +111,205 @@ class _Page_HomeState extends State<Page_Home>
                   children:
                   [
                     // Overview tab
-                    Center(child:
-                      Container
+                    Center(child: Column
                       (
-                        padding: EdgeInsets.all(16),
-                        child: Row
-                        (
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children:
-                          [
-                            // Buttons in left side of overview tab
-                            Column
+                        children:
+                        [
+                          Expanded
+                          (
+                            //padding: EdgeInsets.all(16),
+                            child: Row
                             (
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children:
                               [
-                                ElevatedButton
+                                // Buttons in left side of overview tab
+                                Column
                                 (
-                                  child: Padding
-                                  (
-                                    child: Icon(Symbols.restaurant, size: 32),
-                                    padding: EdgeInsets.all(8),
-                                  ),
-                                  onPressed: ()
-                                  {
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:
+                                  [
+                                    ElevatedButton
+                                    (
+                                      child: Padding
+                                      (
+                                        child: Icon(Symbols.restaurant, size: 32),
+                                        padding: EdgeInsets.all(8),
+                                      ),
+                                      onPressed: ()
+                                      {
 
-                                  }
+                                      }
+                                    ),
+                                    SizedBox(height: 16),
+                                    ElevatedButton
+                                    (
+                                      //child: Icon(Symbols.directions_run),
+                                      child: Padding
+                                      (
+                                        child: Icon(Symbols.directions_run, size: 32),
+                                        padding: EdgeInsets.all(8),
+                                      ),
+                                      onPressed: ()
+                                      {
+
+                                      }
+                                    ),
+                                    SizedBox(height: 16),
+                                    ElevatedButton
+                                    (
+                                      //child: Icon(Symbols.weight),
+                                      child: Padding
+                                      (
+                                        child: Icon(Symbols.weight, size: 32),
+                                        padding: EdgeInsets.all(8),
+                                      ),
+                                      onPressed: ()
+                                      {
+
+                                      }
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 16),
-                                ElevatedButton
-                                (
-                                  //child: Icon(Symbols.directions_run),
-                                  child: Padding
-                                  (
-                                    child: Icon(Symbols.directions_run, size: 32),
-                                    padding: EdgeInsets.all(8),
-                                  ),
-                                  onPressed: ()
-                                  {
 
-                                  }
+                                Expanded
+                                (
+                                  child: SvgPicture.asset
+                                  (
+                                    "assets/avatar.svg",
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
-                                SizedBox(height: 16),
-                                ElevatedButton
-                                (
-                                  //child: Icon(Symbols.weight),
-                                  child: Padding
-                                  (
-                                    child: Icon(Symbols.weight, size: 32),
-                                    padding: EdgeInsets.all(8),
-                                  ),
-                                  onPressed: ()
-                                  {
 
-                                  }
+                                // Buttons in right side of overview tab
+                                Column
+                                (
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:
+                                  [
+                                    ElevatedButton
+                                    (
+                                      //child: Icon(Symbols.mood),
+                                      child: Padding
+                                      (
+                                        child: Icon(Symbols.mood, size: 32),
+                                        padding: EdgeInsets.all(8),
+                                      ),
+                                      onPressed: ()
+                                      {
+
+                                      }
+                                    ),
+                                    SizedBox(height: 16),
+                                    ElevatedButton
+                                    (
+                                      //child: Icon(Symbols.microbiology),
+                                      child: Padding
+                                      (
+                                        child: Icon(Symbols.microbiology, size: 32),
+                                        padding: EdgeInsets.all(8),
+                                      ),
+                                      onPressed: ()
+                                      {
+
+                                      }
+                                    ),
+                                    SizedBox(height: 16),
+                                    ElevatedButton
+                                    (
+                                      //child: Icon(Symbols.height),
+                                      child: Padding
+                                      (
+                                        child: Icon(Symbols.height, size: 32),
+                                        padding: EdgeInsets.all(8),
+                                      ),
+                                      onPressed: ()
+                                      {
+
+                                      }
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
+                          ),
 
-                            Expanded
+                          // Overview bottom section
+                          Container
+                          (
+                            margin: EdgeInsets.all(16),
+
+                            child: Column
                             (
-                              child: SvgPicture.asset
-                              (
-                                "assets/avatar.svg",
-                                fit: BoxFit.contain,
-                              ),
-                            ),
+                              children: [
+                                Text("Calories", style: style_titlelarge),
+                                SizedBox(height: 4),
 
-                            // Buttons in right side of overview tab
-                            Column
-                            (
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children:
-                              [
-                                ElevatedButton
-                                (
-                                  //child: Icon(Symbols.mood),
-                                  child: Padding
-                                  (
-                                    child: Icon(Symbols.mood, size: 32),
-                                    padding: EdgeInsets.all(8),
-                                  ),
-                                  onPressed: ()
-                                  {
-
-                                  }
+                                // Progress bar: Stackover flow answer
+                                Stack(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 20,
+                                      child: LinearProgressIndicator(
+                                        value: 0.6,
+                                        backgroundColor: color_background,
+                                        valueColor: AlwaysStoppedAnimation<Color>(color_primary),
+                                      ),
+                                    ),
+                                    Align(child: Text("600/1000", style: TextStyle(color: color_onprimary)), alignment: Alignment.topCenter,),
+                                  ],
                                 ),
+
                                 SizedBox(height: 16),
-                                ElevatedButton
-                                (
-                                  //child: Icon(Symbols.microbiology),
-                                  child: Padding
-                                  (
-                                    child: Icon(Symbols.microbiology, size: 32),
-                                    padding: EdgeInsets.all(8),
-                                  ),
-                                  onPressed: ()
-                                  {
 
-                                  }
-                                ),
-                                SizedBox(height: 16),
-                                ElevatedButton
-                                (
-                                  //child: Icon(Symbols.height),
-                                  child: Padding
-                                  (
-                                    child: Icon(Symbols.height, size: 32),
-                                    padding: EdgeInsets.all(8),
-                                  ),
-                                  onPressed: ()
-                                  {
-
-                                  }
-                                ),
+                                Text("Overview", style: style_titlelarge),
+                                SizedBox(height: 4),
+                                Text("Looking good", style: style_displaysmall),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
+
+                    // Journal tab
                     Center(child:
-                      Text('2')
+                      Column
+                      (
+                        children:
+                        [
+                          Text("2"),
+                        ],
+                      )
                     ),
+
+                    // History tab
                     Center(child:
-                      Text('3')
+                      Column
+                      (
+                        children:
+                        [
+                          Text("3"),
+                        ],
+                      )
                     ),
+
+                    // Add data tab
                     Center(child:
-                      Text('4')
+                     Column
+                      (
+                        children:
+                        [
+                          Text("4"),
+                        ],
+                      )
                     ),
                   ],
                 ),
               ),
 
               // Bottom section overview
+              /*
               Container
               (
                 margin: EdgeInsets.all(16),
@@ -278,6 +343,7 @@ class _Page_HomeState extends State<Page_Home>
                   ],
                 ),
               ),
+              */
             ],
           ),
         ),
