@@ -118,120 +118,124 @@ class _Page_HomeState extends State<Page_Home>
                           Expanded
                           (
                             //padding: EdgeInsets.all(16),
-                            child: Row
+                            child: Padding
                             (
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children:
-                              [
-                                // Buttons in left side of overview tab
-                                Column
-                                (
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children:
-                                  [
-                                    ElevatedButton
-                                    (
-                                      child: Padding
-                                      (
-                                        child: Icon(Symbols.restaurant, size: 32),
-                                        padding: EdgeInsets.all(8),
-                                      ),
-                                      onPressed: ()
-                                      {
-
-                                      }
-                                    ),
-                                    SizedBox(height: 16),
-                                    ElevatedButton
-                                    (
-                                      //child: Icon(Symbols.directions_run),
-                                      child: Padding
-                                      (
-                                        child: Icon(Symbols.directions_run, size: 32),
-                                        padding: EdgeInsets.all(8),
-                                      ),
-                                      onPressed: ()
-                                      {
-
-                                      }
-                                    ),
-                                    SizedBox(height: 16),
-                                    ElevatedButton
-                                    (
-                                      //child: Icon(Symbols.weight),
-                                      child: Padding
-                                      (
-                                        child: Icon(Symbols.weight, size: 32),
-                                        padding: EdgeInsets.all(8),
-                                      ),
-                                      onPressed: ()
-                                      {
-
-                                      }
-                                    ),
-                                  ],
-                                ),
-
-                                Expanded
-                                (
-                                  child: SvgPicture.asset
+                              padding: EdgeInsets.all(16),
+                              child: Row
+                              (
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children:
+                                [
+                                  // Buttons in left side of overview tab
+                                  Column
                                   (
-                                    "assets/avatar.svg",
-                                    fit: BoxFit.contain,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children:
+                                    [
+                                      ElevatedButton
+                                      (
+                                        child: Padding
+                                        (
+                                          child: Icon(Symbols.restaurant, size: 32),
+                                          padding: EdgeInsets.all(8),
+                                        ),
+                                        onPressed: ()
+                                        {
+
+                                        }
+                                      ),
+                                      SizedBox(height: 16),
+                                      ElevatedButton
+                                      (
+                                        //child: Icon(Symbols.directions_run),
+                                        child: Padding
+                                        (
+                                          child: Icon(Symbols.directions_run, size: 32),
+                                          padding: EdgeInsets.all(8),
+                                        ),
+                                        onPressed: ()
+                                        {
+
+                                        }
+                                      ),
+                                      SizedBox(height: 16),
+                                      ElevatedButton
+                                      (
+                                        //child: Icon(Symbols.weight),
+                                        child: Padding
+                                        (
+                                          child: Icon(Symbols.weight, size: 32),
+                                          padding: EdgeInsets.all(8),
+                                        ),
+                                        onPressed: ()
+                                        {
+
+                                        }
+                                      ),
+                                    ],
                                   ),
-                                ),
 
-                                // Buttons in right side of overview tab
-                                Column
-                                (
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children:
-                                  [
-                                    ElevatedButton
+                                  Expanded
+                                  (
+                                    child: SvgPicture.asset
                                     (
-                                      //child: Icon(Symbols.mood),
-                                      child: Padding
-                                      (
-                                        child: Icon(Symbols.mood, size: 32),
-                                        padding: EdgeInsets.all(8),
-                                      ),
-                                      onPressed: ()
-                                      {
-
-                                      }
+                                      "assets/avatar.svg",
+                                      fit: BoxFit.contain,
                                     ),
-                                    SizedBox(height: 16),
-                                    ElevatedButton
-                                    (
-                                      //child: Icon(Symbols.microbiology),
-                                      child: Padding
-                                      (
-                                        child: Icon(Symbols.microbiology, size: 32),
-                                        padding: EdgeInsets.all(8),
-                                      ),
-                                      onPressed: ()
-                                      {
+                                  ),
 
-                                      }
-                                    ),
-                                    SizedBox(height: 16),
-                                    ElevatedButton
-                                    (
-                                      //child: Icon(Symbols.height),
-                                      child: Padding
+                                  // Buttons in right side of overview tab
+                                  Column
+                                  (
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children:
+                                    [
+                                      ElevatedButton
                                       (
-                                        child: Icon(Symbols.height, size: 32),
-                                        padding: EdgeInsets.all(8),
-                                      ),
-                                      onPressed: ()
-                                      {
+                                        //child: Icon(Symbols.mood),
+                                        child: Padding
+                                        (
+                                          child: Icon(Symbols.mood, size: 32),
+                                          padding: EdgeInsets.all(8),
+                                        ),
+                                        onPressed: ()
+                                        {
 
-                                      }
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                        }
+                                      ),
+                                      SizedBox(height: 16),
+                                      ElevatedButton
+                                      (
+                                        //child: Icon(Symbols.microbiology),
+                                        child: Padding
+                                        (
+                                          child: Icon(Symbols.microbiology, size: 32),
+                                          padding: EdgeInsets.all(8),
+                                        ),
+                                        onPressed: ()
+                                        {
+
+                                        }
+                                      ),
+                                      SizedBox(height: 16),
+                                      ElevatedButton
+                                      (
+                                        //child: Icon(Symbols.height),
+                                        child: Padding
+                                        (
+                                          child: Icon(Symbols.height, size: 32),
+                                          padding: EdgeInsets.all(8),
+                                        ),
+                                        onPressed: ()
+                                        {
+
+                                        }
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                             ),
                           ),
 
                           // Overview bottom section
@@ -273,36 +277,45 @@ class _Page_HomeState extends State<Page_Home>
                     ),
 
                     // Journal tab
-                    Center(child:
-                      Column
+                    Center(child: Padding
                       (
-                        children:
-                        [
-                          Text("2"),
-                        ],
-                      )
+                        padding: EdgeInsets.all(16),
+                        child: Column
+                        (
+                          children:
+                          [
+                            Text("2"),
+                          ],
+                        ),
+                       ),
                     ),
 
                     // History tab
-                    Center(child:
-                      Column
+                    Center(child: Padding
                       (
-                        children:
-                        [
-                          Text("3"),
-                        ],
-                      )
+                        padding: EdgeInsets.all(16),
+                        child: Column
+                        (
+                          children:
+                          [
+                            Text("3"),
+                          ],
+                        ),
+                       ),
                     ),
 
                     // Add data tab
-                    Center(child:
-                     Column
+                    Center(child: Padding
                       (
-                        children:
-                        [
-                          Text("4"),
-                        ],
-                      )
+                        padding: EdgeInsets.all(16),
+                        child: Column
+                        (
+                          children:
+                          [
+                            Text("4"),
+                          ],
+                        ),
+                       ),
                     ),
                   ],
                 ),
