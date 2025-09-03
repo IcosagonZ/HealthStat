@@ -331,7 +331,12 @@ class _Page_HomeState extends State<Page_Home>
                         (
                           children:
                           [
-                            const CardJournal(text: "Hello", time: "8:00", date: "27/2/25"),
+                            // Sample data
+                            CardJournal(heading: "Walk", activity: "Sport", time: "7:03 am", date: "1/9/25"),
+                            CardJournal(heading: "Outing with friends", activity: "Food", time: "2:05 pm", date: "2/9/25"),
+                            CardJournal(heading: "Badminton", activity: "Sport", time: "5:21 pm", date: "2/9/25"),
+                            CardJournal(heading: "Walk", activity: "Sport", time: "7:12 am", date: "3/9/25"),
+                            CardJournal(heading: "Feeling depressed", activity: "Mood", time: "12:15 am", date: "4/9/25"),
                           ],
                         ),
                        ),
@@ -415,13 +420,15 @@ class _Page_HomeState extends State<Page_Home>
 
 class CardJournal extends StatelessWidget
 {
-  final String text;
+  final String heading;
+  final String activity;
   final String time;
   final String date;
 
   const CardJournal({
     Key? key,
-    required this.text,
+    required this.heading,
+    required this.activity,
     required this.time,
     required this.date
   }) : super(key: key);
@@ -479,11 +486,11 @@ class CardJournal extends StatelessWidget
                   (
                     children:
                     [
-                      Text("Note heading"),
+                      Text("$heading"),
                       Expanded(
                         child: Text(" ")
                       ),
-                      Text("$text", style: TextStyle(color: color_primary)),
+                      Text("$activity", style: TextStyle(color: color_primary)),
                       SizedBox(width: 16),
                       Text("$time"),
                       Text(" - "),
