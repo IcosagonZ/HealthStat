@@ -17,6 +17,11 @@ The user will be able to input various details like calories, weight etc... from
 - Track weight and height
 - Log diseases
 
+# Libraries used
+- flutter_svg
+- material_symbols
+- fl_chart
+
 ## To-do
 
 - [ ] Basic UI
