@@ -4,6 +4,11 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'page_overview.dart';
 import '../components/card_buttongrid.dart';
 
+// Data libraries
+import '../data/data_activities.dart';
+import '../data/data_food.dart';
+import '../data/data_mood.dart';
+
 class Page_AddData extends StatefulWidget
 {
   final String data_type;
@@ -93,9 +98,38 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
     super.dispose();
   }
 
-  void tab_type_goto(int index)
+  void tab_type_goto_index(int index)
   {
     tab_controller_type.animateTo(index);
+  }
+
+  void tab_type_goto(String? name)
+  {
+    // Assuming tabs are indexed in alphabetical order
+
+    switch (name)
+    {
+      case "Calorie":
+        tab_type_goto_index(0);
+        break;
+      case "Height":
+        tab_type_goto_index(1);
+        break;
+      case "Journal":
+        tab_type_goto_index(2);
+        break;
+      case "Mood":
+        tab_type_goto_index(3);
+        break;
+      case "Sports":
+        tab_type_goto_index(4);
+        break;
+      case "Weight":
+        tab_type_goto_index(5);
+        break;
+      default:
+        debugPrint("ADD DATA -> Invalid data type tab requested");
+    }
   }
 
   // Main app UI
@@ -154,7 +188,8 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
                       setState(()
                       {
                         data_type_selected = newValue;
-                        debugPrint(data_type_selected);
+                        //debugPrint(data_type_selected);
+                        tab_type_goto(data_type_selected);
                       }
                       );
                     },
@@ -181,22 +216,22 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
                   children:
                   [
                     Center(child:
-                      CardButtonGrid()
+                      CardButtonGrid(heading: "Calorie", data_values: data_food)
                     ),
                     Center(child:
-                      Text("Meow 2")
+                      Text("Height")
                     ),
                     Center(child:
-                      Text("Meow 3")
+                      Text("Journal")
                     ),
                     Center(child:
-                      Text("Meow 4")
+                      CardButtonGrid(heading: "Mood", data_values: data_mood)
                     ),
                     Center(child:
-                      Text("Meow 5")
+                      CardButtonGrid(heading: "Sports", data_values: data_activities)
                     ),
                     Center(child:
-                      Text("Meow 6")
+                      Text("Weight")
                     ),
                   ],
                 )

@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class CardButtonGrid extends StatefulWidget
 {
+  final String heading;
+  final List <String> data_values;
+
   const CardButtonGrid({
     Key? key,
+    required this.heading,
+    required this.data_values,
   }) : super(key: key);
 
   @override
@@ -16,6 +21,7 @@ class _CardButtonGridState extends State<CardButtonGrid>
   //final String activity;
 
   // Test data
+  /*
   final List <String> data_grid_values = const [
     "Apple",
     "Orange",
@@ -31,7 +37,7 @@ class _CardButtonGridState extends State<CardButtonGrid>
     "Watermelon",
     "Tomato",
     "Pumpkin"
-  ];
+  ];*/
 
   int? data_grid_selected_index;
 
@@ -65,14 +71,9 @@ class _CardButtonGridState extends State<CardButtonGrid>
     (
       child: Card.outlined
       (
-        clipBehavior: Clip.hardEdge,
+        //clipBehavior: Clip.hardEdge,
         child: InkWell
         (
-          splashColor: color_onprimary,
-          onTap: ()
-          {
-            //debugPrint("Note tapped");
-          },
           child: Row
           (
             children:
@@ -86,7 +87,7 @@ class _CardButtonGridState extends State<CardButtonGrid>
                   (
                     children:
                     [
-                      Text("Heading"),
+                      Text(widget.heading),
                       SizedBox(height: 16),
                       Expanded
                       (
@@ -94,7 +95,7 @@ class _CardButtonGridState extends State<CardButtonGrid>
                         (
                           shrinkWrap: true,
                           //physics: NeverScrollableScrollPhysics(),
-                          itemCount: data_grid_values.length,
+                          itemCount: widget.data_values.length,
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount
                           (
                             crossAxisCount: 3,
@@ -107,7 +108,11 @@ class _CardButtonGridState extends State<CardButtonGrid>
                             final isSelected = data_grid_selected_index == index;
                             return ElevatedButton
                             (
-                              child: Text(data_grid_values[index]),
+                              child: Text
+                              (
+                                widget.data_values[index],
+                                textAlign: TextAlign.center
+                              ),
                               onPressed: ()
                               {
                                 setState(()
