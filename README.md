@@ -7,6 +7,7 @@ Comprehensive health tracker made with Flutter
     <img src="assets/screenshot0.png" alt="Screenshot 0"/>
     <img src="assets/screenshot1.png" alt="Screenshot 1"/>
     <img src="assets/screenshot2.png" alt="Screenshot 2"/>
+    <img src="assets/screenshot3.png" alt="Screenshot 3"/>
 </p>
 
 ## Features
@@ -26,7 +27,7 @@ The user will be able to input various details like calories, weight etc... from
 
 ## To-do
 
-- [ ] Basic UI
+- [X] Basic UI
 - [ ] Basic functionality (adding data, removing data)
 - [ ] Database storage (in app along with food list)
 - [ ] History with graph

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import 'page_overview.dart';
+
 import '../components/card_buttongrid.dart';
+import '../components/card_journal_full.dart';
 
 // Data libraries
 import '../data/data_activities.dart';
 import '../data/data_food.dart';
 import '../data/data_mood.dart';
+import '../data/data_disease.dart';
 
 class Page_AddData extends StatefulWidget
 {
@@ -25,9 +28,15 @@ class Page_AddData extends StatefulWidget
 class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderStateMixin
 {
   // INTERNAL LOGIC VARIABLES
+  // Visibility variables
+  bool visibility_height = false;
+  bool visibility_weight = false;
+  bool visibility_gridbox = false;
+
   // Dropdown for data type
   final List<String> data_types = [
     "Calorie",
+    "Disease",
     "Height",
     "Journal",
     "Mood",
@@ -88,7 +97,11 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
   void initState()
   {
     super.initState();
-    tab_controller_type = TabController(length: 6, vsync: this);
+    tab_controller_type = TabController(length: data_types.length, vsync: this);
+
+    //debugPrint(widget.data_type);
+    data_type_selected = widget.data_type;
+    tab_type_goto(widget.data_type);
   }
 
   @override
@@ -110,22 +123,46 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
     switch (name)
     {
       case "Calorie":
+        visibility_gridbox = true;
+        visibility_height = false;
+        visibility_weight = false;
         tab_type_goto_index(0);
         break;
-      case "Height":
+      case "Disease":
+        visibility_gridbox = true;
+        visibility_height = false;
+        visibility_weight = false;
         tab_type_goto_index(1);
         break;
-      case "Journal":
+      case "Height":
+        visibility_gridbox = false;
+        visibility_height = true;
+        visibility_weight = false;
         tab_type_goto_index(2);
         break;
-      case "Mood":
+      case "Journal":
+        visibility_gridbox = true;
+        visibility_height = false;
+        visibility_weight = false;
         tab_type_goto_index(3);
         break;
-      case "Sports":
+      case "Mood":
+        visibility_gridbox = true;
+        visibility_height = false;
+        visibility_weight = false;
         tab_type_goto_index(4);
         break;
-      case "Weight":
+      case "Sports":
+        visibility_gridbox = true;
+        visibility_height = false;
+        visibility_weight = false;
         tab_type_goto_index(5);
+        break;
+      case "Weight":
+        visibility_gridbox = false;
+        visibility_height = false;
+        visibility_weight = true;
+        tab_type_goto_index(6);
         break;
       default:
         debugPrint("ADD DATA -> Invalid data type tab requested");
@@ -208,33 +245,82 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
 
               SizedBox(height: 16),
 
-              SizedBox(
-                height: 300,
-                child: TabBarView
+              // Height field
+              Visibility(
+                visible: visibility_height,
+                child: Row
                 (
-                  controller: tab_controller_type,
                   children:
                   [
-                    Center(child:
-                      CardButtonGrid(heading: "Calorie", data_values: data_food)
+                    Text("Height"),
+                    SizedBox(width: 16),
+                    SizedBox(
+                      width: 100,
+                      child: TextField(
+                        decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Height"),
+                      ),
                     ),
-                    Center(child:
-                      Text("Height")
+                    SizedBox(width: 16),
+                    Text("cm"),
+                  ]
+                ),
+              ),
+
+              // Weight field
+              Visibility(
+                visible: visibility_weight,
+                child: Row
+                (
+                  children:
+                  [
+                    Text("Weight"),
+                    SizedBox(width: 16),
+                    SizedBox(
+                      width: 100,
+                      child: TextField(
+                        decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Weight"),
+                      ),
                     ),
-                    Center(child:
-                      Text("Journal")
-                    ),
-                    Center(child:
-                      CardButtonGrid(heading: "Mood", data_values: data_mood)
-                    ),
-                    Center(child:
-                      CardButtonGrid(heading: "Sports", data_values: data_activities)
-                    ),
-                    Center(child:
-                      Text("Weight")
-                    ),
-                  ],
-                )
+                    SizedBox(width: 16),
+                    Text("kg"),
+                  ]
+                ),
+              ),
+
+              Visibility(
+                visible: visibility_gridbox,
+                child: SizedBox
+                (
+                  height: 300,
+                  child: TabBarView
+                  (
+                    controller: tab_controller_type,
+                    children:
+                    [
+                      Center(child:
+                        CardButtonGrid(heading: "Calorie", data_values: data_food)
+                      ),
+                      Center(child:
+                        CardButtonGrid(heading: "Disease", data_values: data_disease)
+                      ),
+                      Center(child:
+                        Text("Height")
+                      ),
+                      Center(child:
+                        CardJournalFull(heading: "Add note"),
+                      ),
+                      Center(child:
+                        CardButtonGrid(heading: "Mood", data_values: data_mood)
+                      ),
+                      Center(child:
+                        CardButtonGrid(heading: "Sports", data_values: data_activities)
+                      ),
+                      Center(child:
+                        Text("Weight")
+                      ),
+                    ],
+                  )
+                ),
               ),
 
               SizedBox(height: 16),

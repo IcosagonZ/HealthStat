@@ -127,7 +127,7 @@ class _Page_OverviewState extends State<Page_Overview>
                           {
                             Navigator.push(context, MaterialPageRoute(builder: (context)
                               {
-                                return const Page_AddData(data_type: "Calories");
+                                return const Page_AddData(data_type: "Calorie");
                               }
                             ));
                           }
