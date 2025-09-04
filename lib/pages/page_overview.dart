@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import 'page_journal.dart';
+import 'page_history.dart';
+import 'page_adddata.dart';
+
 class Page_Overview extends StatefulWidget
 {
   const Page_Overview({super.key});
@@ -46,7 +50,32 @@ class _Page_OverviewState extends State<Page_Overview>
         title: Text("Overview"),
         actions:
         [
-
+          IconButton
+          (
+            icon: Icon(Symbols.event_note),
+            tooltip: "Journal",
+            onPressed: ()
+            {
+              Navigator.push(context, MaterialPageRoute(builder: (context)
+                {
+                  return const Page_Journal();
+                }
+              ));
+            }
+          ),
+          IconButton
+          (
+            icon: Icon(Symbols.history),
+            tooltip: "History",
+            onPressed: ()
+            {
+              Navigator.push(context, MaterialPageRoute(builder: (context)
+                {
+                  return const Page_History();
+                }
+              ));
+            }
+          ),
         ],
       ),
       body: SizedBox.expand
@@ -65,7 +94,7 @@ class _Page_OverviewState extends State<Page_Overview>
                 child: Row
                 (
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children:
+                  children:
                   [
                    // Buttons in left side of overview tab
                    Column
@@ -80,29 +109,35 @@ class _Page_OverviewState extends State<Page_Overview>
                             child: Icon(Symbols.restaurant, size: 32),
                             padding: EdgeInsets.all(8),
                           ),
-                        onPressed: ()
-                        {
-
-                        }
+                          onPressed: ()
+                          {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)
+                              {
+                                return const Page_AddData(data_type: "Calories");
+                              }
+                            ));
+                          }
                         ),
                         SizedBox(height: 16),
                         ElevatedButton
                         (
-                          //child: Icon(Symbols.directions_run),
                           child: Padding
                           (
                             child: Icon(Symbols.directions_run, size: 32),
                             padding: EdgeInsets.all(8),
                           ),
-                        onPressed: ()
-                        {
-
-                        }
+                          onPressed: ()
+                          {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)
+                              {
+                                return const Page_AddData(data_type: "Sports");
+                              }
+                            ));
+                          }
                         ),
                         SizedBox(height: 16),
                         ElevatedButton
                         (
-                          //child: Icon(Symbols.weight),
                           child: Padding
                           (
                             child: Icon(Symbols.weight, size: 32),
@@ -110,7 +145,11 @@ class _Page_OverviewState extends State<Page_Overview>
                           ),
                           onPressed: ()
                           {
-
+                            Navigator.push(context, MaterialPageRoute(builder: (context)
+                              {
+                                return const Page_AddData(data_type: "Weight");
+                              }
+                            ));
                           }
                         ),
                       ],
@@ -133,7 +172,6 @@ class _Page_OverviewState extends State<Page_Overview>
                       [
                         ElevatedButton
                         (
-                          //child: Icon(Symbols.mood),
                           child: Padding
                           (
                             child: Icon(Symbols.mood, size: 32),
@@ -141,36 +179,46 @@ class _Page_OverviewState extends State<Page_Overview>
                           ),
                           onPressed: ()
                           {
-
+                            Navigator.push(context, MaterialPageRoute(builder: (context)
+                              {
+                                return const Page_AddData(data_type: "Mood");
+                              }
+                            ));
                           }
                         ),
                         SizedBox(height: 16),
                         ElevatedButton
                         (
-                          //child: Icon(Symbols.microbiology),
                           child: Padding
                           (
                             child: Icon(Symbols.microbiology, size: 32),
                             padding: EdgeInsets.all(8),
                           ),
-                        onPressed: ()
-                        {
-
-                        }
+                          onPressed: ()
+                          {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)
+                              {
+                                return const Page_AddData(data_type: "Disease");
+                              }
+                            ));
+                          }
                         ),
                         SizedBox(height: 16),
                         ElevatedButton
                         (
-                          //child: Icon(Symbols.height),
                           child: Padding
                           (
                             child: Icon(Symbols.height, size: 32),
                             padding: EdgeInsets.all(8),
                           ),
-                        onPressed: ()
-                        {
-
-                        }
+                          onPressed: ()
+                          {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)
+                              {
+                                return const Page_AddData(data_type: "Height");
+                              }
+                            ));
+                          }
                         ),
                       ],
                     ),

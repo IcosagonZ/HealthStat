@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
+
+import 'page_overview.dart';
 
 class Page_AddData extends StatefulWidget
 {
-  const Page_AddData({super.key});
+  //const Page_AddData({super.key});
+
+  final String data_type;
+
+  const Page_AddData({
+    Key? key,
+    required this.data_type,
+  }) : super(key: key);
 
   @override
   State<Page_AddData> createState() => _Page_AddDataState();
@@ -41,9 +51,22 @@ class _Page_AddDataState extends State<Page_AddData>
       appBar: AppBar
       (
         title: Text("Add data"),
-        actions:
+        /*actions:
         [
-        ],
+          IconButton
+          (
+            icon: Icon(Symbols.home),
+            onPressed: ()
+            {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context)
+                {
+                  return const Page_Overview();
+                }
+              ));
+            }
+          ),
+        ],*/
       ),
       body: SizedBox.expand
       (
@@ -54,7 +77,7 @@ class _Page_AddDataState extends State<Page_AddData>
           (
             children:
             [
-              Text("Add data here"),
+              Text(widget.data_type),
             ],
           ),
         ),

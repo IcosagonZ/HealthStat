@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:material_symbols_icons/symbols.dart';
+
+import 'page_overview.dart';
 import '../components/card_journal.dart';
 
 class Page_Journal extends StatefulWidget
