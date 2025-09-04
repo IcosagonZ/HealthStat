@@ -26,22 +26,20 @@ class MyApp extends StatelessWidget
       title: 'HealthStat',
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: const Page_Home(title: 'HealthStat'),
+      home: const Page_Overview(),
     );
   }
 }
 
-class Page_Home extends StatefulWidget
+class Page_Overview extends StatefulWidget
 {
-  const Page_Home({super.key, required this.title});
-
-  final String title;
+  const Page_Overview({super.key});
 
   @override
-  State<Page_Home> createState() => _Page_HomeState();
+  State<Page_Overview> createState() => _Page_OverviewState();
 }
 
-class _Page_HomeState extends State<Page_Home>
+class _Page_OverviewState extends State<Page_Overview>
 {
   // Main app UI
   @override
@@ -69,7 +67,292 @@ class _Page_HomeState extends State<Page_Home>
     final style_titlemedium = text_theme.titleMedium;
     final style_titlesmall = text_theme.titleSmall;
 
-    // Development test data
+    return Scaffold
+    (
+      appBar: AppBar
+      (
+        title: Text("Overview"),
+        actions:
+        [
+
+        ],
+      ),
+      body: SizedBox.expand
+      (
+        // Main tabs
+        child: Column
+            (
+              children:
+              [
+                Expanded
+                (
+                  //padding: EdgeInsets.all(16),
+                  child: Padding
+                  (
+                    padding: EdgeInsets.all(16),
+                    child: Row
+                    (
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children:
+                    [
+                      // Buttons in left side of overview tab
+                      Column
+                      (
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:
+                        [
+                          ElevatedButton
+                          (
+                            child: Padding
+                            (
+                              child: Icon(Symbols.restaurant, size: 32),
+                              padding: EdgeInsets.all(8),
+                            ),
+                          onPressed: ()
+                          {
+
+                          }
+                          ),
+                        SizedBox(height: 16),
+                        ElevatedButton
+                        (
+                          //child: Icon(Symbols.directions_run),
+                          child: Padding
+                          (
+                            child: Icon(Symbols.directions_run, size: 32),
+                            padding: EdgeInsets.all(8),
+                          ),
+                        onPressed: ()
+                        {
+
+                        }
+                        ),
+                        SizedBox(height: 16),
+                        ElevatedButton
+                        (
+                          //child: Icon(Symbols.weight),
+                          child: Padding
+                          (
+                            child: Icon(Symbols.weight, size: 32),
+                            padding: EdgeInsets.all(8),
+                          ),
+                        onPressed: ()
+                        {
+
+                        }
+                        ),
+                        ],
+                      ),
+
+                    Expanded
+                    (
+                      child: SvgPicture.asset
+                      (
+                        "assets/avatar.svg",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+
+                    // Buttons in right side of overview tab
+                    Column
+                    (
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children:
+                      [
+                        ElevatedButton
+                        (
+                          //child: Icon(Symbols.mood),
+                          child: Padding
+                          (
+                            child: Icon(Symbols.mood, size: 32),
+                            padding: EdgeInsets.all(8),
+                          ),
+                        onPressed: ()
+                        {
+
+                        }
+                        ),
+                      SizedBox(height: 16),
+                      ElevatedButton
+                      (
+                        //child: Icon(Symbols.microbiology),
+                        child: Padding
+                        (
+                          child: Icon(Symbols.microbiology, size: 32),
+                          padding: EdgeInsets.all(8),
+                        ),
+                      onPressed: ()
+                      {
+
+                      }
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton
+                      (
+                        //child: Icon(Symbols.height),
+                        child: Padding
+                        (
+                          child: Icon(Symbols.height, size: 32),
+                          padding: EdgeInsets.all(8),
+                        ),
+                      onPressed: ()
+                      {
+
+                      }
+                      ),
+                      ],
+                    ),
+                    ],
+                    ),
+                  ),
+                ),
+
+            // Overview bottom section
+            Container
+            (
+              margin: EdgeInsets.all(16),
+
+              child: Column
+              (
+                children: [
+                  Text("Calories", style: style_titlelarge),
+                  SizedBox(height: 4),
+
+                  // Progress bar: Stackover flow answer
+                  Stack(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20,
+                        child: LinearProgressIndicator(
+                          value: 0.6,
+                          backgroundColor: color_background,
+                          valueColor: AlwaysStoppedAnimation<Color>(color_primary),
+                        ),
+                      ),
+                      Align(child: Text("600/1000", style: TextStyle(color: color_onprimary)), alignment: Alignment.topCenter,),
+                    ],
+                  ),
+
+                SizedBox(height: 16),
+
+                Text("Overview", style: style_titlelarge),
+                SizedBox(height: 4),
+                Text("Looking good", style: style_displaysmall),
+                ],
+              ),
+            ),
+              ],
+            ),
+          ),
+    );
+  }
+}
+
+class Page_Journal extends StatefulWidget
+{
+  const Page_Journal({super.key});
+
+  @override
+  State<Page_Journal> createState() => _Page_JournalState();
+}
+
+class _Page_JournalState extends State<Page_Journal>
+{
+  // Main app UI
+  @override
+  Widget build(BuildContext context)
+  {
+    final color_scheme = Theme.of(context).colorScheme;
+    final text_theme = Theme.of(context).textTheme;
+
+    Color color_primary = color_scheme.primary;
+    Color color_secondary = color_scheme.secondary;
+    Color color_onprimary = color_scheme.onPrimary;
+    Color color_onsecondary = color_scheme.onSecondary;
+    Color color_background = color_scheme.onBackground;
+    Color color_surface = color_scheme.onSurface;
+
+    final style_displaylarge = text_theme.displayLarge;
+    final style_displaymedium = text_theme.displayMedium;
+    final style_displaysmall = text_theme.displaySmall;
+
+    final style_headlinelarge = text_theme.headlineLarge;
+    final style_headlinemedium = text_theme.headlineMedium;
+    final style_headlinesmall = text_theme.headlineSmall;
+
+    final style_titlelarge = text_theme.titleLarge;
+    final style_titlemedium = text_theme.titleMedium;
+    final style_titlesmall = text_theme.titleSmall;
+
+    return Scaffold
+    (
+      appBar: AppBar
+      (
+        title: Text("Journal"),
+        actions:
+        [
+        ],
+      ),
+      body: SizedBox.expand
+      (
+        child: Padding
+        (
+          padding: EdgeInsets.all(16),
+          child: ListView
+          (
+            children:
+            [
+              // Sample data
+              CardJournal(heading: "Walk", activity: "Sport", time: "7:03 am", date: "1/9/25"),
+              CardJournal(heading: "Outing with friends", activity: "Food", time: "2:05 pm", date: "2/9/25"),
+              CardJournal(heading: "Badminton", activity: "Sport", time: "5:21 pm", date: "2/9/25"),
+              CardJournal(heading: "Walk", activity: "Sport", time: "7:12 am", date: "3/9/25"),
+              CardJournal(heading: "Feeling depressed", activity: "Mood", time: "12:15 am", date: "4/9/25"),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Page_History extends StatefulWidget
+{
+  const Page_History({super.key});
+
+  @override
+  State<Page_History> createState() => _Page_HistoryState();
+}
+
+class _Page_HistoryState extends State<Page_History>
+{
+  // Main app UI
+  @override
+  Widget build(BuildContext context)
+  {
+    final color_scheme = Theme.of(context).colorScheme;
+    final text_theme = Theme.of(context).textTheme;
+
+    Color color_primary = color_scheme.primary;
+    Color color_secondary = color_scheme.secondary;
+    Color color_onprimary = color_scheme.onPrimary;
+    Color color_onsecondary = color_scheme.onSecondary;
+    Color color_background = color_scheme.onBackground;
+    Color color_surface = color_scheme.onSurface;
+
+    final style_displaylarge = text_theme.displayLarge;
+    final style_displaymedium = text_theme.displayMedium;
+    final style_displaysmall = text_theme.displaySmall;
+
+    final style_headlinelarge = text_theme.headlineLarge;
+    final style_headlinemedium = text_theme.headlineMedium;
+    final style_headlinesmall = text_theme.headlineSmall;
+
+    final style_titlelarge = text_theme.titleLarge;
+    final style_titlemedium = text_theme.titleMedium;
+    final style_titlesmall = text_theme.titleSmall;
+
+        // Development test data
     final List<FlSpot> graph_data_calories =
     [
       FlSpot(1, 1825),
@@ -116,304 +399,125 @@ class _Page_HomeState extends State<Page_Home>
 
     return Scaffold
     (
-      /*appBar: AppBar
+      appBar: AppBar
       (
-        title: Text(widget.title),
+        title: Text("History"),
         actions:
         [
-
         ],
-      ),*/
+      ),
       body: SizedBox.expand
       (
-        // Main tabs
-        child: DefaultTabController
+        child: Padding
         (
-          initialIndex: 1,
-          length: 4,
-          child: Column
+          padding: EdgeInsets.all(16),
+          child: ListView
           (
             children:
             [
-              // Top bar
-              Container
+              // Sample data
+              CardGraph
               (
-                margin: EdgeInsets.only(top: 16),
-
-                child: TabBar
-                (
-                  tabs:
-                  [
-                    Tab(icon: Icon(Icons.dashboard), text: "Overview"),
-                    Tab(icon: Icon(Icons.event_note), text: "Journal"),
-                    Tab(icon: Icon(Icons.history), text: "History"),
-                    Tab(icon: Icon(Icons.assignment_add), text: "Add"),
-                  ],
-                  labelColor: color_primary,
-                  unselectedLabelColor: color_secondary,
-                ),
+                text:"Calories",
+                graph_data: graph_data_calories,
+                graph_max_x: 7,
+                graph_min_x: 1,
+                graph_max_y: 3000,
+                graph_min_y: 1000,
               ),
 
-              // Main avatar display
-              Expanded
+              CardGraph
               (
-                child: TabBarView
-                (
-                  children:
-                  [
-                    // Overview tab
-                    Center(child: Column
-                      (
-                        children:
-                        [
-                          Expanded
-                          (
-                            //padding: EdgeInsets.all(16),
-                            child: Padding
-                            (
-                              padding: EdgeInsets.all(16),
-                              child: Row
-                              (
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children:
-                                [
-                                  // Buttons in left side of overview tab
-                                  Column
-                                  (
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children:
-                                    [
-                                      ElevatedButton
-                                      (
-                                        child: Padding
-                                        (
-                                          child: Icon(Symbols.restaurant, size: 32),
-                                          padding: EdgeInsets.all(8),
-                                        ),
-                                        onPressed: ()
-                                        {
-
-                                        }
-                                      ),
-                                      SizedBox(height: 16),
-                                      ElevatedButton
-                                      (
-                                        //child: Icon(Symbols.directions_run),
-                                        child: Padding
-                                        (
-                                          child: Icon(Symbols.directions_run, size: 32),
-                                          padding: EdgeInsets.all(8),
-                                        ),
-                                        onPressed: ()
-                                        {
-
-                                        }
-                                      ),
-                                      SizedBox(height: 16),
-                                      ElevatedButton
-                                      (
-                                        //child: Icon(Symbols.weight),
-                                        child: Padding
-                                        (
-                                          child: Icon(Symbols.weight, size: 32),
-                                          padding: EdgeInsets.all(8),
-                                        ),
-                                        onPressed: ()
-                                        {
-
-                                        }
-                                      ),
-                                    ],
-                                  ),
-
-                                  Expanded
-                                  (
-                                    child: SvgPicture.asset
-                                    (
-                                      "assets/avatar.svg",
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-
-                                  // Buttons in right side of overview tab
-                                  Column
-                                  (
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children:
-                                    [
-                                      ElevatedButton
-                                      (
-                                        //child: Icon(Symbols.mood),
-                                        child: Padding
-                                        (
-                                          child: Icon(Symbols.mood, size: 32),
-                                          padding: EdgeInsets.all(8),
-                                        ),
-                                        onPressed: ()
-                                        {
-
-                                        }
-                                      ),
-                                      SizedBox(height: 16),
-                                      ElevatedButton
-                                      (
-                                        //child: Icon(Symbols.microbiology),
-                                        child: Padding
-                                        (
-                                          child: Icon(Symbols.microbiology, size: 32),
-                                          padding: EdgeInsets.all(8),
-                                        ),
-                                        onPressed: ()
-                                        {
-
-                                        }
-                                      ),
-                                      SizedBox(height: 16),
-                                      ElevatedButton
-                                      (
-                                        //child: Icon(Symbols.height),
-                                        child: Padding
-                                        (
-                                          child: Icon(Symbols.height, size: 32),
-                                          padding: EdgeInsets.all(8),
-                                        ),
-                                        onPressed: ()
-                                        {
-
-                                        }
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                             ),
-                          ),
-
-                          // Overview bottom section
-                          Container
-                          (
-                            margin: EdgeInsets.all(16),
-
-                            child: Column
-                            (
-                              children: [
-                                Text("Calories", style: style_titlelarge),
-                                SizedBox(height: 4),
-
-                                // Progress bar: Stackover flow answer
-                                Stack(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: 20,
-                                      child: LinearProgressIndicator(
-                                        value: 0.6,
-                                        backgroundColor: color_background,
-                                        valueColor: AlwaysStoppedAnimation<Color>(color_primary),
-                                      ),
-                                    ),
-                                    Align(child: Text("600/1000", style: TextStyle(color: color_onprimary)), alignment: Alignment.topCenter,),
-                                  ],
-                                ),
-
-                                SizedBox(height: 16),
-
-                                Text("Overview", style: style_titlelarge),
-                                SizedBox(height: 4),
-                                Text("Looking good", style: style_displaysmall),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // Journal tab
-                    Center(child: Padding
-                      (
-                        padding: EdgeInsets.all(16),
-                        child: ListView
-                        (
-                          children:
-                          [
-                            // Sample data
-                            CardJournal(heading: "Walk", activity: "Sport", time: "7:03 am", date: "1/9/25"),
-                            CardJournal(heading: "Outing with friends", activity: "Food", time: "2:05 pm", date: "2/9/25"),
-                            CardJournal(heading: "Badminton", activity: "Sport", time: "5:21 pm", date: "2/9/25"),
-                            CardJournal(heading: "Walk", activity: "Sport", time: "7:12 am", date: "3/9/25"),
-                            CardJournal(heading: "Feeling depressed", activity: "Mood", time: "12:15 am", date: "4/9/25"),
-                          ],
-                        ),
-                       ),
-                    ),
-
-                    // History tab
-                    Center(child: Padding
-                      (
-                        padding: EdgeInsets.all(16),
-                        child: ListView
-                        (
-                          children:
-                          [
-                            CardGraph
-                            (
-                              text:"Calories",
-                              graph_data: graph_data_calories,
-                              graph_max_x: 7,
-                              graph_min_x: 1,
-                              graph_max_y: 3000,
-                              graph_min_y: 1000,
-                            ),
-
-                            CardGraph
-                            (
-                              text:"Mood",
-                              graph_data: graph_data_mood,
-                              graph_max_x: 7,
-                              graph_min_x: 1,
-                              graph_max_y: 10,
-                              graph_min_y: 0,
-                            ),
-
-                            CardGraph
-                            (
-                              text:"Weight",
-                              graph_data: graph_data_weight,
-                              graph_max_x: 7,
-                              graph_min_x: 1,
-                              graph_max_y: 70,
-                              graph_min_y: 60,
-                            ),
-
-                            CardGraph
-                            (
-                              text:"Height",
-                              graph_data: graph_data_height,
-                              graph_max_x: 7,
-                              graph_min_x: 1,
-                              graph_max_y: 180,
-                              graph_min_y: 160,
-                            ),
-                          ],
-                        ),
-                       ),
-                    ),
-
-                    // Add data tab
-                    Center(child: Padding
-                      (
-                        padding: EdgeInsets.all(16),
-                        child: Column
-                        (
-                          children:
-                          [
-                            Text("4"),
-                          ],
-                        ),
-                       ),
-                    ),
-                  ],
-                ),
+                text:"Mood",
+                graph_data: graph_data_mood,
+                graph_max_x: 7,
+                graph_min_x: 1,
+                graph_max_y: 10,
+                graph_min_y: 0,
               ),
+
+              CardGraph
+              (
+                text:"Weight",
+                graph_data: graph_data_weight,
+                graph_max_x: 7,
+                graph_min_x: 1,
+                graph_max_y: 70,
+                graph_min_y: 60,
+              ),
+
+              CardGraph
+              (
+                text:"Height",
+                graph_data: graph_data_height,
+                graph_max_x: 7,
+                graph_min_x: 1,
+                graph_max_y: 180,
+                graph_min_y: 160,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Page_AddData extends StatefulWidget
+{
+  const Page_AddData({super.key});
+
+  @override
+  State<Page_AddData> createState() => _Page_AddDataState();
+}
+
+class _Page_AddDataState extends State<Page_AddData>
+{
+  // Main app UI
+  @override
+  Widget build(BuildContext context)
+  {
+    final color_scheme = Theme.of(context).colorScheme;
+    final text_theme = Theme.of(context).textTheme;
+
+    Color color_primary = color_scheme.primary;
+    Color color_secondary = color_scheme.secondary;
+    Color color_onprimary = color_scheme.onPrimary;
+    Color color_onsecondary = color_scheme.onSecondary;
+    Color color_background = color_scheme.onBackground;
+    Color color_surface = color_scheme.onSurface;
+
+    final style_displaylarge = text_theme.displayLarge;
+    final style_displaymedium = text_theme.displayMedium;
+    final style_displaysmall = text_theme.displaySmall;
+
+    final style_headlinelarge = text_theme.headlineLarge;
+    final style_headlinemedium = text_theme.headlineMedium;
+    final style_headlinesmall = text_theme.headlineSmall;
+
+    final style_titlelarge = text_theme.titleLarge;
+    final style_titlemedium = text_theme.titleMedium;
+    final style_titlesmall = text_theme.titleSmall;
+
+    return Scaffold
+    (
+      appBar: AppBar
+      (
+        title: Text("Add data"),
+        actions:
+        [
+        ],
+      ),
+      body: SizedBox.expand
+      (
+        child: Padding
+        (
+          padding: EdgeInsets.all(16),
+          child: ListView
+          (
+            children:
+            [
+              Text("Add data here"),
             ],
           ),
         ),
