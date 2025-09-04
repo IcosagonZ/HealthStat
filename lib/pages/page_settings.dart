@@ -3,20 +3,17 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import 'page_overview.dart';
 
-class Page_AddData extends StatefulWidget
+class Page_Settings extends StatefulWidget
 {
-  final String data_type;
-
-  const Page_AddData({
+  const Page_Settings({
     Key? key,
-    required this.data_type,
   }) : super(key: key);
 
   @override
-  State<Page_AddData> createState() => _Page_AddDataState();
+  State<Page_Settings> createState() => _Page_SettingsState();
 }
 
-class _Page_AddDataState extends State<Page_AddData>
+class _Page_SettingsState extends State<Page_Settings>
 {
   // Main app UI
   @override
@@ -48,7 +45,7 @@ class _Page_AddDataState extends State<Page_AddData>
     (
       appBar: AppBar
       (
-        title: Text("Add data"),
+        title: Text("Settings"),
       ),
       body: SizedBox.expand
       (
@@ -59,7 +56,7 @@ class _Page_AddDataState extends State<Page_AddData>
           (
             children:
             [
-              Text(widget.data_type),
+              Text("Settings"),
             ],
           ),
         ),

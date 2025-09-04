@@ -6,6 +6,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'page_journal.dart';
 import 'page_history.dart';
 import 'page_adddata.dart';
+import 'page_settings.dart';
 
 class Page_Overview extends StatefulWidget
 {
@@ -72,6 +73,19 @@ class _Page_OverviewState extends State<Page_Overview>
               Navigator.push(context, MaterialPageRoute(builder: (context)
                 {
                   return const Page_History();
+                }
+              ));
+            }
+          ),
+          IconButton
+          (
+            icon: Icon(Symbols.settings),
+            tooltip: "Settings",
+            onPressed: ()
+            {
+              Navigator.push(context, MaterialPageRoute(builder: (context)
+                {
+                  return const Page_Settings();
                 }
               ));
             }
