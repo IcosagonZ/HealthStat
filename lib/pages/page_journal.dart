@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import 'page_overview.dart';
+import 'page_journal_full.dart';
+
 import '../components/card_journal.dart';
 
 class Page_Journal extends StatefulWidget
@@ -48,6 +50,20 @@ class _Page_JournalState extends State<Page_Journal>
         title: Text("Journal"),
         actions:
         [
+          IconButton
+          (
+            icon: Icon(Symbols.add),
+            tooltip: "Add note",
+            onPressed: ()
+            {
+              Navigator.push(context, MaterialPageRoute(builder: (context)
+                {
+                  return Page_JournalFull();
+                }
+              ));
+            }
+          ),
+          SizedBox(width: 8)
         ],
       ),
       body: SizedBox.expand

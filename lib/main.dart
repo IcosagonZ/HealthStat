@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'pages/page_overview.dart';
 import 'pages/page_journal.dart';
 import 'pages/page_history.dart';
-import 'pages/page_adddata.dart';
+import 'pages/page_add.dart';
 
 void main()
 {

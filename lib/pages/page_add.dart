@@ -38,7 +38,7 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
     "Calorie",
     "Disease",
     "Height",
-    "Journal",
+    //"Journal", journal could have seperate page
     "Mood",
     "Sports",
     "Weight",
@@ -140,29 +140,30 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
         visibility_weight = false;
         tab_type_goto_index(2);
         break;
-      case "Journal":
+      /*case "Journal":
         visibility_gridbox = true;
         visibility_height = false;
         visibility_weight = false;
         tab_type_goto_index(3);
         break;
+      */
       case "Mood":
         visibility_gridbox = true;
         visibility_height = false;
         visibility_weight = false;
-        tab_type_goto_index(4);
+        tab_type_goto_index(3);
         break;
       case "Sports":
         visibility_gridbox = true;
         visibility_height = false;
         visibility_weight = false;
-        tab_type_goto_index(5);
+        tab_type_goto_index(4);
         break;
       case "Weight":
         visibility_gridbox = false;
         visibility_height = false;
         visibility_weight = true;
-        tab_type_goto_index(6);
+        tab_type_goto_index(5);
         break;
       default:
         debugPrint("ADD DATA -> Invalid data type tab requested");
@@ -306,9 +307,11 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
                       Center(child:
                         Text("Height")
                       ),
+                      /* journal could have seperate page
                       Center(child:
                         CardJournalFull(heading: "Add note"),
                       ),
+                      */
                       Center(child:
                         CardButtonGrid(heading: "Mood", data_values: data_mood)
                       ),

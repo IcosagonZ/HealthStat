@@ -3,10 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+// General views
 import 'page_journal.dart';
 import 'page_history.dart';
-import 'page_adddata.dart';
+import 'page_add.dart';
 import 'page_settings.dart';
+
+// Details views
+import 'page_details/page_details_activity.dart';
+import 'page_details/page_details_calories.dart';
+import 'page_details/page_details_disease.dart';
+import 'page_details/page_details_measurements.dart';
+import 'page_details/page_details_mentalhealth.dart';
+
 
 class Page_Overview extends StatefulWidget
 {
@@ -18,6 +27,9 @@ class Page_Overview extends StatefulWidget
 
 class _Page_OverviewState extends State<Page_Overview>
 {
+  // App variables
+  bool shortcut_openDetailed = true;
+
   // Main app UI
   @override
   Widget build(BuildContext context)
@@ -90,6 +102,7 @@ class _Page_OverviewState extends State<Page_Overview>
               ));
             }
           ),
+          SizedBox(width: 8)
         ],
       ),
       body: SizedBox.expand
@@ -127,7 +140,14 @@ class _Page_OverviewState extends State<Page_Overview>
                           {
                             Navigator.push(context, MaterialPageRoute(builder: (context)
                               {
-                                return const Page_AddData(data_type: "Calorie");
+                                if(shortcut_openDetailed)
+                                {
+                                  return Page_Details_Calories();
+                                }
+                                else
+                                {
+                                  return Page_AddData(data_type: "Calorie");
+                                }
                               }
                             ));
                           }
@@ -144,7 +164,14 @@ class _Page_OverviewState extends State<Page_Overview>
                           {
                             Navigator.push(context, MaterialPageRoute(builder: (context)
                               {
-                                return const Page_AddData(data_type: "Sports");
+                                if(shortcut_openDetailed)
+                                {
+                                  return Page_Details_Activity();
+                                }
+                                else
+                                {
+                                  return const Page_AddData(data_type: "Sports");
+                                }
                               }
                             ));
                           }
@@ -161,7 +188,14 @@ class _Page_OverviewState extends State<Page_Overview>
                           {
                             Navigator.push(context, MaterialPageRoute(builder: (context)
                               {
-                                return const Page_AddData(data_type: "Weight");
+                                if(shortcut_openDetailed)
+                                {
+                                  return Page_Details_Measurements();
+                                }
+                                else
+                                {
+                                  return const Page_AddData(data_type: "Weight");
+                                }
                               }
                             ));
                           }
@@ -195,7 +229,14 @@ class _Page_OverviewState extends State<Page_Overview>
                           {
                             Navigator.push(context, MaterialPageRoute(builder: (context)
                               {
-                                return const Page_AddData(data_type: "Mood");
+                                if(shortcut_openDetailed)
+                                {
+                                  return Page_Details_MentalHealth();
+                                }
+                                else
+                                {
+                                  return const Page_AddData(data_type: "Mood");
+                                }
                               }
                             ));
                           }
@@ -212,7 +253,14 @@ class _Page_OverviewState extends State<Page_Overview>
                           {
                             Navigator.push(context, MaterialPageRoute(builder: (context)
                               {
-                                return const Page_AddData(data_type: "Disease");
+                                if(shortcut_openDetailed)
+                                {
+                                  return Page_Details_Disease();
+                                }
+                                else
+                                {
+                                  return const Page_AddData(data_type: "Disease");
+                                }
                               }
                             ));
                           }
@@ -229,7 +277,14 @@ class _Page_OverviewState extends State<Page_Overview>
                           {
                             Navigator.push(context, MaterialPageRoute(builder: (context)
                               {
-                                return const Page_AddData(data_type: "Height");
+                                if(shortcut_openDetailed)
+                                {
+                                  return Page_Details_Measurements();
+                                }
+                                else
+                                {
+                                  return const Page_AddData(data_type: "Height");
+                                }
                               }
                             ));
                           }
