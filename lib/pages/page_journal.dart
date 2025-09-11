@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-
 import 'package:material_symbols_icons/symbols.dart';
+
+import 'package:intl/intl.dart';
+
+import '../main.dart';
 
 import 'page_overview.dart';
 import 'page_journal_full.dart';
 
 import '../components/card_journal.dart';
+import '../data/database.dart';
 
 class Page_Journal extends StatefulWidget
 {
@@ -17,6 +21,25 @@ class Page_Journal extends StatefulWidget
 
 class _Page_JournalState extends State<Page_Journal>
 {
+  List<JournalData> data_journal_copy = [];
+
+  // Init
+  @override
+  void initState()
+  {
+    page_journal_update();
+    super.initState();
+  }
+
+  void page_journal_update()
+  {
+    setState(()
+    {
+      data_journal_copy = database_journal_retrive();
+    }
+    );
+  }
+
   // Main app UI
   @override
   Widget build(BuildContext context)
@@ -56,7 +79,7 @@ class _Page_JournalState extends State<Page_Journal>
             tooltip: "Add note",
             onPressed: ()
             {
-              Navigator.push(context, MaterialPageRoute(builder: (context)
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
                 {
                   return Page_JournalFull();
                 }
@@ -73,6 +96,22 @@ class _Page_JournalState extends State<Page_Journal>
           padding: EdgeInsets.all(16),
           child: ListView
           (
+            children: data_journal_copy.map((data)
+            {
+              return CardJournal
+              (
+                heading: data.heading,
+                activity: data.type,
+                time: DateFormat("hh:mm a").format(data.timestamp),
+                date: DateFormat("dd/mm/yy").format(data.timestamp)
+              );
+            }
+            ).toList(),
+          ),
+          /*
+          child: ListView
+          (
+
             children:
             [
               // Sample data
@@ -82,7 +121,7 @@ class _Page_JournalState extends State<Page_Journal>
               CardJournal(heading: "Walk", activity: "Sport", time: "7:12 am", date: "3/9/25"),
               CardJournal(heading: "Feeling depressed", activity: "Mood", time: "12:15 am", date: "4/9/25"),
             ],
-          ),
+          ),*/
         ),
       ),
     );

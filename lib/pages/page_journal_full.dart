@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import 'page_overview.dart';
-import '../components/card_journal.dart';
+import 'page_journal.dart';
+
+import '../data/database.dart';
 
 class Page_JournalFull extends StatefulWidget
 {
@@ -15,6 +17,13 @@ class Page_JournalFull extends StatefulWidget
 
 class _Page_JournalFullState extends State<Page_JournalFull>
 {
+  // Journal entry variables
+  JournalData? data_journal_entry;
+
+  // Journal entry UI variables
+  final textfield_heading_controller = TextEditingController();
+  final textfield_note_controller = TextEditingController();
+
   // Time picker variables
   TimeOfDay? data_time_selected;
 
@@ -124,8 +133,9 @@ class _Page_JournalFullState extends State<Page_JournalFull>
             [
               TextField
               (
+                controller: textfield_heading_controller,
                 decoration: InputDecoration(
-                  hintText: "Heading",
+                hintText: "Heading",
               ),
               ),
               SizedBox(height: 16),
@@ -133,6 +143,7 @@ class _Page_JournalFullState extends State<Page_JournalFull>
               (
                 child: TextField
                 (
+                  controller: textfield_note_controller,
                   maxLines: null,
                   expands: true,
                   decoration: InputDecoration
@@ -178,12 +189,21 @@ class _Page_JournalFullState extends State<Page_JournalFull>
                   IconButton
                   (
                     icon: Icon(Symbols.save),
-                    onPressed: () => print("Save"),
-                    /*
-                    child: Text
-                    (
-                      "Save"
-                    ),*/
+                    onPressed: ()
+                    {
+                      database_journal_add
+                      (
+                        1000,
+                        textfield_heading_controller.text,
+                        textfield_note_controller.text,
+                        "Journal",
+                        DateTime.now()
+                      );
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
+                      {
+                          return const Page_Journal();
+                      }));
+                    },
                   ),
                 ],
               ),
@@ -191,19 +211,6 @@ class _Page_JournalFullState extends State<Page_JournalFull>
           ),
         ),
       ),
-      /*
-      floatingActionButton: FloatingActionButton
-      (
-        child: Container
-        (
-          padding: const EdgeInsets.all(16),
-          child: Icon(Symbols.save)
-        ),
-        onPressed: ()
-        {
-        },
-      )
-      */
     );
   }
 }

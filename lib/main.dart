@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget
       title: 'HealthStat',
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: Page_Overview(),
+      home: Page_Overview()
     );
   }
 }
