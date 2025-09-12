@@ -3,8 +3,6 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import 'package:intl/intl.dart';
 
-import '../main.dart';
-
 import 'page_overview.dart';
 import 'page_journal_full.dart';
 
