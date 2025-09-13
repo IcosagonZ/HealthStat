@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import 'package:fl_chart/fl_chart.dart';
+import '../../components/card_graph.dart';
 
 import '../page_overview.dart';
 import '../page_add.dart';
 
-import '../../components/card_graph.dart';
 
 class Page_Details_Activity extends StatefulWidget
 {

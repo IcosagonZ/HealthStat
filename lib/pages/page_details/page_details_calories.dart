@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import 'package:fl_chart/fl_chart.dart';
+import '../../components/card_graph.dart';
+
 import '../page_overview.dart';
 import '../page_add.dart';
 
@@ -16,6 +19,18 @@ class Page_Details_Calories extends StatefulWidget
 
 class _Page_Details_CaloriesState extends State<Page_Details_Calories>
 {
+  // Development test data
+  final List<FlSpot> graph_data_calories =
+  [
+    FlSpot(1, 1825),
+    FlSpot(2, 1967),
+    FlSpot(3, 2465),
+    FlSpot(4, 1956),
+    FlSpot(5, 1767),
+    FlSpot(6, 1867),
+    FlSpot(7, 1847),
+  ];
+
   // Main app UI
   @override
   Widget build(BuildContext context)
@@ -74,7 +89,107 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
           (
             children:
             [
-              Text("Calories"),
+              Text("Overview", style: style_titlelarge),
+              SizedBox(height:8),
+              Card
+              (
+                clipBehavior: Clip.hardEdge,
+                child: Padding
+                (
+                  padding: EdgeInsets.all(16),
+                  child: Row
+                  (
+                    children:
+                    [
+                      Expanded
+                      (
+                        child: Column
+                        (
+                          children:
+                          [
+                            Row
+                            (
+                              children:
+                              [
+                                Expanded
+                                (
+                                  child: Text("Calories consumed ")
+                                ),
+                                Text("1000")
+                              ]
+                            ),
+                            Row
+                            (
+                              children:
+                              [
+                                Expanded
+                                (
+                                  child: Text("Calories needed ")
+                                ),
+                                Text("1000")
+                              ]
+                            ),
+                            Row
+                            (
+                              children:
+                              [
+                                Expanded
+                                (
+                                  child: Text("Advice ")
+                                ),
+                                Text("Maintain")
+                              ]
+                            ),
+                          ]
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      CircleAvatar
+                      (
+                        radius: 32,
+                        child: Text("78"),
+                      )
+                    ],
+                  )
+                )
+              ),
+              SizedBox(height:16),
+              Text("Recent", style: style_titlelarge),
+              SizedBox(height:8),
+              Card
+              (
+                child: Padding
+                (
+                  padding: EdgeInsets.all(4),
+                  child: ListTile
+                  (
+                    title: Text("Plain Croissant"),
+                    subtitle: Row
+                    (
+                      children:
+                      [
+                        Text("123 calories"),
+                        SizedBox(width: 8),
+                        Text("2x"),
+                      ]
+                    ),
+                    trailing: Icon(Symbols.cake)
+                  )
+                )
+              ),
+              SizedBox(height:16),
+              Text("History", style: style_titlelarge),
+              SizedBox(height:8),
+              // Sample data
+              CardGraph
+              (
+                text:"Calorie consumption",
+                graph_data: graph_data_calories,
+                graph_max_x: 7,
+                graph_min_x: 1,
+                graph_max_y: 3000,
+                graph_min_y: 1000,
+              ),
             ],
           ),
         ),
