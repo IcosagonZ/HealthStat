@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import 'package:fl_chart/fl_chart.dart';
+import '../../components/card_graph.dart';
+
 import '../page_overview.dart';
 import '../page_add.dart';
 
@@ -16,6 +19,28 @@ class Page_Details_Measurements extends StatefulWidget
 
 class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
 {
+  final List<FlSpot> graph_data_weight =
+  [
+    FlSpot(1, 65),
+    FlSpot(2, 67),
+    FlSpot(3, 68),
+    FlSpot(4, 68),
+    FlSpot(5, 69),
+    FlSpot(6, 67),
+    FlSpot(7, 65),
+  ];
+
+  final List<FlSpot> graph_data_height =
+  [
+    FlSpot(1, 170),
+    FlSpot(2, 170),
+    FlSpot(3, 170),
+    FlSpot(4, 170),
+    FlSpot(5, 170),
+    FlSpot(6, 170),
+    FlSpot(7, 170),
+  ];
+
   // Main app UI
   @override
   Widget build(BuildContext context)
@@ -87,7 +112,82 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
           (
             children:
             [
-              Text("Height and weight"),
+              Text("Overview", style: style_titlelarge),
+              SizedBox(height:8),
+              Card
+              (
+                clipBehavior: Clip.hardEdge,
+                child: Padding
+                (
+                  padding: EdgeInsets.all(16),
+                  child: Row
+                  (
+                    children:
+                    [
+                      Expanded
+                      (
+                        child: Column
+                        (
+                          children:
+                          [
+                            Row
+                            (
+                              children:
+                              [
+                                Expanded
+                                (
+                                  child: Text("Height ")
+                                ),
+                                Text("170 cm")
+                              ]
+                            ),
+                            Row
+                            (
+                              children:
+                              [
+                                Expanded
+                                (
+                                  child: Text("Weight ")
+                                ),
+                                Text("57.8 kg")
+                              ]
+                            ),
+                          ]
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      CircleAvatar
+                      (
+                        radius: 32,
+                        child: Text("21.4"),
+                      )
+                    ],
+                  )
+                )
+              ),
+              SizedBox(height:16),
+              Text("History", style: style_titlelarge),
+              SizedBox(height:8),
+              // Sample data
+              CardGraph
+              (
+                text:"Height",
+                graph_data: graph_data_height,
+                graph_max_x: 7,
+                graph_min_x: 1,
+                graph_max_y: 180,
+                graph_min_y: 160,
+              ),
+              // Sample data
+              CardGraph
+              (
+                text:"Weight",
+                graph_data: graph_data_weight,
+                graph_max_x: 7,
+                graph_min_x: 1,
+                graph_max_y: 70,
+                graph_min_y: 50,
+              ),
             ],
           ),
         ),
