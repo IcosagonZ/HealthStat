@@ -74,7 +74,45 @@ class _Page_Details_DiseaseState extends State<Page_Details_Disease>
           (
             children:
             [
-              Text("Disease"),
+              Text("Overview", style: style_titlelarge),
+              SizedBox(height:8),
+              Card
+              (
+                child: ListTile
+                (
+                  title: Text("Summary"),
+                  subtitle: Text("You are healthy"),
+                  trailing: Icon(Symbols.conditions),
+                ),
+              ),
+              SizedBox(height:16),
+              Text("Tracking", style: style_titlelarge),
+              SizedBox(height:8),
+              // Sample data
+              Card
+              (
+                child: Column
+                (
+                  children:
+                  [
+                    ListTile
+                    (
+                      title: Text("Cough"),
+                      trailing: Icon(Symbols.ent),
+                    ),
+                    ListTile
+                    (
+                      title: Text("Fever"),
+                      trailing: Icon(Symbols.sick),
+                    ),
+                    ListTile
+                    (
+                      title: Text("Cold"),
+                      trailing: Icon(Symbols.sick),
+                    ),
+                  ]
+                ),
+              ),
             ],
           ),
         ),
