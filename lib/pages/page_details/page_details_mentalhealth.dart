@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import 'package:fl_chart/fl_chart.dart';
+import '../../components/card_graph.dart';
+
 import '../page_overview.dart';
 import '../page_add.dart';
 
@@ -16,6 +19,17 @@ class Page_Details_MentalHealth extends StatefulWidget
 
 class _Page_Details_MentalHealthState extends State<Page_Details_MentalHealth>
 {
+  final List<FlSpot> graph_data_mood =
+  [
+    FlSpot(1, 8),
+    FlSpot(2, 6),
+    FlSpot(3, 5),
+    FlSpot(4, 4),
+    FlSpot(5, 5),
+    FlSpot(6, 3),
+    FlSpot(7, 7),
+  ];
+
   // Main app UI
   @override
   Widget build(BuildContext context)
@@ -74,7 +88,30 @@ class _Page_Details_MentalHealthState extends State<Page_Details_MentalHealth>
           (
             children:
             [
-              Text("Mood"),
+              Text("Overview", style: style_titlelarge),
+              SizedBox(height:8),
+              Card
+              (
+                child: ListTile
+                (
+                  title: Text("Summary"),
+                  subtitle: Text("Take a break"),
+                  trailing: Icon(Symbols.cognition_2),
+                ),
+              ),
+              SizedBox(height:16),
+              Text("History", style: style_titlelarge),
+              SizedBox(height:8),
+              // Sample data
+              CardGraph
+              (
+                text:"Mood",
+                graph_data: graph_data_mood,
+                graph_max_x: 7,
+                graph_min_x: 1,
+                graph_max_y: 10,
+                graph_min_y: 0,
+              ),
             ],
           ),
         ),
