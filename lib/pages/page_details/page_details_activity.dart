@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-import 'package:fl_chart/fl_chart.dart';
-import '../../components/card_graph.dart';
+//import 'package:fl_chart/fl_chart.dart';
+//import '../../components/card_graph.dart';
 
 import '../page_overview.dart';
 import '../page_add.dart';
@@ -20,6 +20,7 @@ class Page_Details_Activity extends StatefulWidget
 
 class _Page_Details_ActivityState extends State<Page_Details_Activity>
 {
+  /*
   // Development test data
   final List<FlSpot> graph_data_calories =
   [
@@ -31,6 +32,7 @@ class _Page_Details_ActivityState extends State<Page_Details_Activity>
     FlSpot(6, 1867),
     FlSpot(7, 1847),
   ];
+  */
 
   // Main app UI
   @override
@@ -170,6 +172,7 @@ class _Page_Details_ActivityState extends State<Page_Details_Activity>
                   )
                 )
               ),
+              /*
               SizedBox(height:16),
               Text("History", style: style_titlelarge),
               SizedBox(height:8),
@@ -183,6 +186,7 @@ class _Page_Details_ActivityState extends State<Page_Details_Activity>
                 graph_max_y: 3000,
                 graph_min_y: 1000,
               ),
+              */
             ],
           ),
         ),

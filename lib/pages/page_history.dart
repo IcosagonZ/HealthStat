@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:fl_chart/fl_chart.dart';
+//import 'package:fl_chart/fl_chart.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import 'page_overview.dart';
-import '../components/card_graph.dart';
-
+//import '../components/card_graph.dart';
 
 class Page_History extends StatefulWidget
 {
@@ -43,18 +42,7 @@ class _Page_HistoryState extends State<Page_History>
     final style_titlemedium = text_theme.titleMedium;
     final style_titlesmall = text_theme.titleSmall;
 
-        // Development test data
-    final List<FlSpot> graph_data_calories =
-    [
-      FlSpot(1, 1825),
-      FlSpot(2, 1967),
-      FlSpot(3, 2465),
-      FlSpot(4, 1956),
-      FlSpot(5, 1767),
-      FlSpot(6, 1867),
-      FlSpot(7, 1847),
-    ];
-
+    /*
     final List<FlSpot> graph_data_mood =
     [
       FlSpot(1, 8),
@@ -87,6 +75,7 @@ class _Page_HistoryState extends State<Page_History>
       FlSpot(6, 170),
       FlSpot(7, 170),
     ];
+    */
 
     return Scaffold
     (
@@ -106,6 +95,7 @@ class _Page_HistoryState extends State<Page_History>
           (
             children:
             [
+              /*
               // Sample data
               CardGraph
               (
@@ -146,6 +136,7 @@ class _Page_HistoryState extends State<Page_History>
                 graph_max_y: 180,
                 graph_min_y: 160,
               ),
+              */
             ],
           ),
         ),

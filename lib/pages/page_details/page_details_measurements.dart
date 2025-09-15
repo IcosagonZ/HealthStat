@@ -19,6 +19,7 @@ class Page_Details_Measurements extends StatefulWidget
 
 class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
 {
+  /*
   final List<FlSpot> graph_data_weight =
   [
     FlSpot(1, 65),
@@ -39,7 +40,7 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
     FlSpot(5, 170),
     FlSpot(6, 170),
     FlSpot(7, 170),
-  ];
+  ];*/
 
   // Main app UI
   @override
@@ -165,6 +166,7 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
                   )
                 )
               ),
+              /*
               SizedBox(height:16),
               Text("History", style: style_titlelarge),
               SizedBox(height:8),
@@ -188,6 +190,7 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
                 graph_max_y: 70,
                 graph_min_y: 50,
               ),
+              */
             ],
           ),
         ),

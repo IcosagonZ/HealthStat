@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-import 'package:fl_chart/fl_chart.dart';
+//import 'package:fl_chart/fl_chart.dart';
 import '../../components/card_graph.dart';
 
 import '../page_overview.dart';
@@ -19,6 +19,7 @@ class Page_Details_MentalHealth extends StatefulWidget
 
 class _Page_Details_MentalHealthState extends State<Page_Details_MentalHealth>
 {
+  /*
   final List<FlSpot> graph_data_mood =
   [
     FlSpot(1, 8),
@@ -29,6 +30,7 @@ class _Page_Details_MentalHealthState extends State<Page_Details_MentalHealth>
     FlSpot(6, 3),
     FlSpot(7, 7),
   ];
+  */
 
   // Main app UI
   @override
@@ -99,6 +101,7 @@ class _Page_Details_MentalHealthState extends State<Page_Details_MentalHealth>
                   trailing: Icon(Symbols.cognition_2),
                 ),
               ),
+              /*
               SizedBox(height:16),
               Text("History", style: style_titlelarge),
               SizedBox(height:8),
@@ -112,6 +115,7 @@ class _Page_Details_MentalHealthState extends State<Page_Details_MentalHealth>
                 graph_max_y: 10,
                 graph_min_y: 0,
               ),
+              */
             ],
           ),
         ),

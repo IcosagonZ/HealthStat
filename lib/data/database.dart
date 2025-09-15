@@ -1,3 +1,5 @@
+import 'package:fl_chart/fl_chart.dart';
+
 // JOURNAL
 class JournalData
 {
@@ -66,6 +68,18 @@ List<CalorieData> data_calories =
 List<CalorieData> database_calories_retrive()
 {
   return data_calories;
+}
+
+CalorieData database_calories_recent()
+{
+  if(data_calories.length>0)
+  {
+    return data_calories[data_calories.length-1];
+  }
+  else
+  {
+    return CalorieData(0, "N/A", 0, 0, 0, DateTime.now());
+  }
 }
 
 void database_calories_add
