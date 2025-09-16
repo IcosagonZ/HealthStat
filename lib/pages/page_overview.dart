@@ -91,7 +91,7 @@ class _Page_OverviewState extends State<Page_Overview>
             }
           ),
           */
-          /*
+
           IconButton
           (
             icon: Icon(Symbols.settings),
@@ -105,7 +105,7 @@ class _Page_OverviewState extends State<Page_Overview>
               ));
             }
           ),
-          */
+
           SizedBox(width: 8)
         ],
       ),

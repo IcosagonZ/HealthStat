@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
 import 'pages/page_overview.dart';
-import 'pages/page_journal.dart';
-import 'pages/page_history.dart';
-import 'pages/page_add.dart';
 
 void main()
 {
+  // Database setup
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
+
   runApp(const MyApp());
 }
 

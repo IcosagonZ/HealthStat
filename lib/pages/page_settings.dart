@@ -3,6 +3,8 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import 'page_overview.dart';
 
+import '../data/database.dart';
+
 class Page_Settings extends StatefulWidget
 {
   const Page_Settings({
@@ -15,6 +17,25 @@ class Page_Settings extends StatefulWidget
 
 class _Page_SettingsState extends State<Page_Settings>
 {
+  String settings_database_path = "N/A";
+
+  @override
+  void initState()
+  {
+    settings_update_display();
+    super.initState();
+  }
+
+  Future<void> settings_update_display() async
+  {
+    String _settings_database_path = await database_path();
+    setState(()
+    {
+      settings_database_path = _settings_database_path;
+    }
+    );
+  }
+
   // Main app UI
   @override
   Widget build(BuildContext context)
@@ -56,7 +77,17 @@ class _Page_SettingsState extends State<Page_Settings>
           (
             children:
             [
-              Text("Settings"),
+              Text("Database path", style: style_titlelarge),
+              SizedBox(height: 8),
+              Text(settings_database_path),
+              SizedBox(height: 8),
+              ElevatedButton
+              (
+                child: Text("Delete database"),
+                onPressed: (){
+                  database_delete();
+                }
+              ),
             ],
           ),
         ),

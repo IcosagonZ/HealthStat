@@ -1,4 +1,98 @@
-import 'package:fl_chart/fl_chart.dart';
+// Database code
+
+import 'dart:async';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+//import 'package:fl_chart/fl_chart.dart';
+
+// DATABASE
+List<String> database_sql_commands =
+[
+  "create table if not exists journal (id integer, heading text, content text, type text, creation text)"
+];
+
+Future<String> database_path() async
+{
+  var database_storage_path = await getDatabasesPath();
+  String database_data_path =  join(database_storage_path, "healthstat.db");
+
+  return database_data_path;
+}
+
+Future<void> database_delete() async
+{
+  var database_storage_path = await getDatabasesPath();
+  String database_data_path =  join(database_storage_path, "healthstat.db");
+
+  await deleteDatabase(database_data_path);
+}
+
+Future<void> database_write(String query) async
+{
+  var database_storage_path = await getDatabasesPath();
+  String database_data_path =  join(database_storage_path, "healthstat.db");
+
+  Database database_db = await openDatabase
+  (
+    database_data_path,
+    version: 1,
+    onCreate: (Database db, int version) async
+    {
+      for (var database_sql_command in database_sql_commands)
+      {
+        await db.execute(database_sql_command);
+      }
+    },
+    onOpen: (Database db) async
+    {
+      for (var database_sql_command in database_sql_commands)
+      {
+        await db.execute(database_sql_command);
+      }
+    }
+  );
+
+  await database_db.transaction((txn) async
+  {
+    int result = await txn.rawInsert(query);
+    print("DATABASE: Written to database ($result)");
+  }
+  );
+
+  await database_db.close();
+}
+
+Future<List<Map<String, dynamic>>> database_read(String query) async
+{
+  var database_storage_path = await getDatabasesPath();
+  String database_data_path =  join(database_storage_path, "healthstat.db");
+
+  Database database_db = await openDatabase
+  (
+    database_data_path,
+    version: 1,
+    onCreate: (Database db, int version) async
+    {
+      for (var database_sql_command in database_sql_commands)
+      {
+        await db.execute(database_sql_command);
+      }
+    },
+    onOpen: (Database db) async
+    {
+      for (var database_sql_command in database_sql_commands)
+      {
+        await db.execute(database_sql_command);
+      }
+    }
+  );
+
+  final List<Map<String, dynamic>> database_result = await database_db.rawQuery(query);
+
+  await database_db.close();
+
+  return database_result;
+}
 
 // JOURNAL
 class JournalData
@@ -13,35 +107,56 @@ class JournalData
 }
 
 // dummy data
-List<JournalData> data_journal =
-[
-  JournalData(0, "Test 1", "Hello", "Mood", DateTime.now()),
-  JournalData(1, "Test 2", "Bello", "Sports", DateTime.now()),
-  JournalData(2, "Test 3", "Mello", "Calorie", DateTime.now()),
-];
+List<JournalData> data_journal = [];
 
-List<JournalData> database_journal_retrive()
+Future<List<JournalData>> database_journal_retrive() async
 {
+  data_journal = [];
+
+  final List<Map<String, dynamic>> database_result = await database_read("select * from journal");
+
+  for (var row in database_result)
+  {
+    int id = row["id"] as int;
+    String heading = row["heading"] as String;
+    String content = row["type"] as String;
+    String type = row["type"] as String;
+    String creation = row["creation"] as String;
+
+    data_journal.add(JournalData
+    (
+      id,
+      heading,
+      content,
+      type,
+      DateTime.parse(creation)
+    ));
+  }
+
   return data_journal;
 }
 
-void database_journal_add
+Future<void> database_journal_add
 (
   int id,
   String heading,
   String content,
   String type,
-  DateTime timestamp
-)
+  DateTime creation
+) async
 {
   data_journal.add(JournalData
   (
-    1000,
+    id,
     heading,
     content,
     type,
-    timestamp
+    creation
   ));
+
+  String creation_iso = creation.toIso8601String();
+
+  await database_write('insert into journal values(1000, "$heading", "$content", "$type", "$creation_iso")');
 }
 
 

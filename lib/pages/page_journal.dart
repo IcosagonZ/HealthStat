@@ -29,11 +29,13 @@ class _Page_JournalState extends State<Page_Journal>
     super.initState();
   }
 
-  void page_journal_update()
+  Future<void> page_journal_update() async
   {
+    List<JournalData> data_journal_result = await database_journal_retrive();
+
     setState(()
     {
-      data_journal_copy = database_journal_retrive();
+      data_journal_copy = data_journal_result;
     }
     );
   }
@@ -92,20 +94,38 @@ class _Page_JournalState extends State<Page_Journal>
         child: Padding
         (
           padding: EdgeInsets.all(16),
-          child: ListView
+          child: Stack
           (
-            children: data_journal_copy.map((data)
-            {
-              return CardJournal
+            children:
+            [
+              Visibility
               (
-                heading: data.heading,
-                activity: data.type,
-                time: DateFormat("hh:mm a").format(data.timestamp),
-                date: DateFormat("dd/mm/yy").format(data.timestamp)
-              );
-            }
-            ).toList(),
-          ),
+                visible: (data_journal_copy.isNotEmpty),
+                child: ListView
+                (
+                  children: data_journal_copy.map((data)
+                  {
+                    return CardJournal
+                    (
+                      heading: data.heading,
+                      activity: data.type,
+                      time: DateFormat("hh:mm a").format(data.timestamp),
+                      date: DateFormat("dd/M/yy").format(data.timestamp)
+                    );
+                  }
+                  ).toList(),
+                ),
+              ),
+              Visibility
+              (
+                visible: (data_journal_copy.isEmpty),
+                child: Center
+                (
+                  child: Text("No data"),
+                )
+              )
+            ]
+          )
           /*
           child: ListView
           (
