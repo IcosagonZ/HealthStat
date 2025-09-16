@@ -1,14 +1,22 @@
 // Database code
 
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
 //import 'package:fl_chart/fl_chart.dart';
 
 // DATABASE
 List<String> database_sql_commands =
 [
-  "create table if not exists journal (id integer, heading text, content text, type text, creation text)"
+  "create table if not exists journals (id integer primary key autoincrement, heading text, content text, type text, tags text, creation_time text)",
+  "create table if not exists measurements (id integer primary key autoincrement, jid integer, type text, value integer, unit text, tags text, creation_time text)",
+  "create table if not exists moods (id integer primary key autoincrement, jid integer, moods text, tags text, creation_time text)",
+  "create table if not exists symptoms (id integer primary key autoincrement, jid integer, symptom text, intensity integer, resolved integer, from_duration text, to_duration text, tags text, creation_time text)",
+  "create table if not exists calories (id integer primary key autoincrement, jid integer, item text, qty integer, mass int, calories int, tags text, creation_time text)",
+  "create table if not exists activities (id integer primary key autoincrement, jid integer, activity text, type text, calories int, duration int, tags text, extra text, creation_time text)",
 ];
 
 Future<String> database_path() async
@@ -101,9 +109,10 @@ class JournalData
   String heading;
   String content;
   String type;
-  DateTime timestamp;
+  List<String> tags;
+  DateTime creation_time;
 
-  JournalData(this.id, this.heading, this.content, this.type, this.timestamp);
+  JournalData(this.id, this.heading, this.content, this.type, this.tags, this.creation_time);
 }
 
 // dummy data
@@ -113,7 +122,8 @@ Future<List<JournalData>> database_journal_retrive() async
 {
   data_journal = [];
 
-  final List<Map<String, dynamic>> database_result = await database_read("select * from journal");
+  /*
+  final List<Map<String, dynamic>> database_result = await database_read("select * from journals");
 
   for (var row in database_result)
   {
@@ -121,7 +131,8 @@ Future<List<JournalData>> database_journal_retrive() async
     String heading = row["heading"] as String;
     String content = row["type"] as String;
     String type = row["type"] as String;
-    String creation = row["creation"] as String;
+    List<String> tags = jsonDecode(row["tags"]) as String;
+    String creation_time = row["creation_time"] as String;
 
     data_journal.add(JournalData
     (
@@ -129,9 +140,10 @@ Future<List<JournalData>> database_journal_retrive() async
       heading,
       content,
       type,
+      tags,
       DateTime.parse(creation)
     ));
-  }
+  }*/
 
   return data_journal;
 }
@@ -142,7 +154,8 @@ Future<void> database_journal_add
   String heading,
   String content,
   String type,
-  DateTime creation
+  List<String> tags,
+  DateTime creation_time
 ) async
 {
   data_journal.add(JournalData
@@ -151,12 +164,14 @@ Future<void> database_journal_add
     heading,
     content,
     type,
-    creation
+    tags,
+    creation_time
   ));
 
-  String creation_iso = creation.toIso8601String();
+  String creation_iso = creation_time.toIso8601String();
+  String tags_json = jsonEncode(tags);
 
-  await database_write('insert into journal values(1000, "$heading", "$content", "$type", "$creation_iso")');
+  await database_write('insert into journals(heading, content, type, tags, creation_time) values("$heading", "$content", "$type", "$tags_json", "$creation_iso")');
 }
 
 
@@ -164,20 +179,19 @@ Future<void> database_journal_add
 class CalorieData
 {
   int id;
+  int jid;
   String item;
-  int quantity;
-  int weight; // grams
+  int qty;
+  int mass; // grams
   int calories;
-  DateTime timestamp;
+  List<String> tags;
+  DateTime creation_time;
 
-  CalorieData(this.id, this.item, this.quantity, this.weight, this.calories, this.timestamp);
+  CalorieData(this.id, this.jid, this.item, this.qty, this.mass, this.calories, this.tags, this.creation_time);
 }
 
-// dummy data
 List<CalorieData> data_calories =
 [
-  CalorieData(0, "Nutella sandwich", 2, 100, 200, DateTime.now()),
-  CalorieData(0, "Peanut butter sandwich", 2, 100, 250, DateTime.now()),
 ];
 
 List<CalorieData> database_calories_retrive()
@@ -193,29 +207,38 @@ CalorieData database_calories_recent()
   }
   else
   {
-    return CalorieData(0, "N/A", 0, 0, 0, DateTime.now());
+    return CalorieData(0, 0, "N/A", 0, 0, 0, [], DateTime.now());
   }
 }
 
-void database_calories_add
+Future<void> database_calories_add
 (
   int id,
+  int jid,
   String item,
-  int quantity,
-  int weight,
+  int qty,
+  int mass,
   int calories,
-  DateTime timestamp
-)
+  List<String> tags,
+  DateTime creation_time
+) async
 {
   data_calories.add(CalorieData
   (
     id,
+    jid,
     item,
-    quantity,
-    weight,
+    qty,
+    mass,
     calories,
-    timestamp
+    tags,
+    creation_time
   ));
+
+  String creation_iso = creation_time.toIso8601String();
+  String tags_json = jsonEncode(tags);
+
+  await database_write('insert into calories(jid, item, qty, mass, calories, tags, creation_time) values($jid, "$item", qty, mass, calories, "$tags_json", "$creation_iso")');
 }
 
 
@@ -223,21 +246,20 @@ void database_calories_add
 class ActivityData
 {
   int id;
+  int jid;
   String activity;
+  String type;
   int calories;
   int duration; // in seconds
-  List<int> extra; // extra info like reps, distance etc...
-  DateTime timestamp;
+  List<String> tags;
+  List<String> extra; // extra info like reps, distance etc...
+  DateTime creation_time;
 
-  ActivityData(this.id, this.activity, this.calories, this.duration, this.extra, this.timestamp);
+  ActivityData(this.id, this.jid, this.activity, this.type, this.calories, this.duration, this.tags, this.extra, this.creation_time);
 }
 
-// dummy data
 List<ActivityData> data_activities =
 [
-  ActivityData(0, "Swimming", 200, 2700, [200], DateTime.now()),
-  ActivityData(1, "Walking", 180, 3800, [2], DateTime.now()),
-  ActivityData(2, "Badminton", 350, 1800, [8], DateTime.now()),
 ];
 
 List<ActivityData> database_activities_retrive()
@@ -245,25 +267,37 @@ List<ActivityData> database_activities_retrive()
   return data_activities;
 }
 
-void database_activities_add
+Future<void> database_activities_add
 (
   int id,
+  int jid,
   String activity,
+  String type,
   int calories,
   int duration,
-  List<int> extra,
-  DateTime timestamp
-)
+  List<String> tags,
+  List<String> extra,
+  DateTime creation_time
+) async
 {
   data_activities.add(ActivityData
   (
     id,
+    jid,
     activity,
+    type,
     calories,
     duration,
+    tags,
     extra,
-    timestamp
+    creation_time
   ));
+
+  String creation_iso = creation_time.toIso8601String();
+  String tags_json = jsonEncode(tags);
+  String extra_json = jsonEncode(extra);
+
+  await database_write('insert into activities(jid, activity, type, calories, duration, "$tags", "$extra", "$creation_iso") values($jid, "$activity", "$type", calories, duration, "$tags_json", "$extra_json", "$creation_iso")');
 }
 
 
@@ -271,19 +305,16 @@ void database_activities_add
 class MoodData
 {
   int id;
+  int jid;
   List<String> moods;
-  DateTime timestamp;
+  List<String> tags;
+  DateTime creation_time;
 
-  MoodData(this.id, this.moods, this.timestamp);
+  MoodData(this.id, this.jid, this.moods, this.tags, this.creation_time);
 }
 
-// dummy data
 List<MoodData> data_moods =
 [
-  MoodData(0, ["Sleepy", "Tired", "Exhausted"], DateTime.now()),
-  MoodData(1, ["Depressed", "Lonely"], DateTime.now()),
-  MoodData(2, ["Happy", "Excited"], DateTime.now()),
-  MoodData(3, ["Sad"], DateTime.now()),
 ];
 
 List<MoodData> database_moods_retrive()
@@ -291,19 +322,29 @@ List<MoodData> database_moods_retrive()
   return data_moods;
 }
 
-void database_moods_add
+Future<void> database_moods_add
 (
   int id,
+  int jid,
   List<String> moods,
-  DateTime timestamp
-)
+  List<String> tags,
+  DateTime creation_time
+) async
 {
   data_moods.add(MoodData
   (
     id,
+    jid,
     moods,
-    timestamp
+    tags,
+    creation_time
   ));
+
+  String moods_json = jsonEncode(moods);
+  String tags_json = jsonEncode(tags);
+  String creation_iso = creation_time.toIso8601String();
+
+  await database_write('insert into moods(jid, moods, tags, creation_time) values($jid, "$moods_json", "$tags_json", "$creation_iso")');
 }
 
 
@@ -311,21 +352,18 @@ void database_moods_add
 class BodyData
 {
   int id;
+  int jid;
   String type; // height, weight etc...
   int value;
-  DateTime timestamp;
+  String unit;
+  List<String> tags;
+  DateTime creation_time;
 
-  BodyData(this.id, this.type, this.value, this.timestamp);
+  BodyData(this.id, this.jid, this.type, this.value, this.unit, this.tags, this.creation_time);
 }
 
-// dummy data
 List<BodyData> data_body =
 [
-  BodyData(0, "Height", 170, DateTime.now()),
-  BodyData(1, "Weight", 55, DateTime.now()),
-  BodyData(2, "Weight", 57, DateTime.now()),
-  BodyData(3, "Weight", 58, DateTime.now()),
-  BodyData(4, "Weight", 55, DateTime.now()),
 ];
 
 List<BodyData> database_body_retrive()
@@ -333,21 +371,32 @@ List<BodyData> database_body_retrive()
   return data_body;
 }
 
-void database_body_add
+Future<void> database_body_add
 (
   int id,
+  int jid,
   String type,
   int value,
-  DateTime timestamp
-)
+  String unit,
+  List<String> tags,
+  DateTime creation_time
+) async
 {
   data_body.add(BodyData
   (
     id,
+    jid,
     type,
     value,
-    timestamp
+    unit,
+    tags,
+    creation_time
   ));
+
+  String tags_json = jsonEncode(tags);
+  String creation_iso = creation_time.toIso8601String();
+
+  await database_write('insert into measurements(jid, type, value, unit, tags, creation_time) values($jid, "$type", $value, "$unit", "$tags_json", "$creation_iso")');
 }
 
 
@@ -355,18 +404,20 @@ void database_body_add
 class SymptomData
 {
   int id;
-  List<String> symptoms;
-  DateTime timestamp;
+  int jid;
+  String symptom;
+  int intensity;
+  DateTime from_duration;
+  DateTime to_duration;
+  int is_resolved;
+  DateTime creation_time;
 
-  SymptomData(this.id, this.symptoms, this.timestamp);
+  SymptomData(this.id, this.jid, this.symptom, this.intensity, this.from_duration, this.to_duration, this.is_resolved, this.creation_time);
 }
 
 // dummy data
 List<SymptomData> data_symptoms =
 [
-  SymptomData(0, ["Cough", "Fever", "Headache"], DateTime.now()),
-  SymptomData(1, ["Cold"], DateTime.now()),
-  SymptomData(2, ["Body pain", "Headache"], DateTime.now()),
 ];
 
 List<SymptomData> database_symptoms_retrive()
@@ -374,17 +425,31 @@ List<SymptomData> database_symptoms_retrive()
   return data_symptoms;
 }
 
-void database_symptoms_add
+Future<void> database_symptoms_add
 (
   int id,
-  List<String> symptoms,
-  DateTime timestamp
-)
+  int jid,
+  String symptom,
+  int intensity,
+  DateTime from_duration,
+  DateTime to_duration,
+  int is_resolved,
+  DateTime creation_time
+) async
 {
   data_symptoms.add(SymptomData
   (
     id,
-    symptoms,
-    timestamp
+    jid,
+    symptom,
+    intensity,
+    from_duration,
+    to_duration,
+    is_resolved,
+    creation_time
   ));
+
+  String creation_iso = creation_time.toIso8601String();
+
+  await database_write('insert into symptoms(jid, symptom, intensity, from_duration, to_duration, is_resolved, creation_time) values($jid, $symptom, intensity, "$from_duration", "$to_duration", $is_resolved, "$creation_iso")');
 }

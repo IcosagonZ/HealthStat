@@ -197,6 +197,7 @@ class _Page_JournalFullState extends State<Page_JournalFull>
                         textfield_heading_controller.text,
                         textfield_note_controller.text,
                         "Journal",
+                        ["Long"],
                         DateTime.now()
                       );
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)

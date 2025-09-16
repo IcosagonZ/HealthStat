@@ -109,8 +109,8 @@ class _Page_JournalState extends State<Page_Journal>
                     (
                       heading: data.heading,
                       activity: data.type,
-                      time: DateFormat("hh:mm a").format(data.timestamp),
-                      date: DateFormat("dd/M/yy").format(data.timestamp)
+                      time: DateFormat("hh:mm a").format(data.creation_time),
+                      date: DateFormat("dd/M/yy").format(data.creation_time)
                     );
                   }
                   ).toList(),

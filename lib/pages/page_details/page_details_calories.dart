@@ -35,8 +35,30 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
   ];
   */
 
-  // Recent data
-  CalorieData calorie_recent = database_calories_recent();
+  // Calorie data
+  /*
+  List<CalorieData> data_calories_copy = [];
+  CalorieData calorie_recent;*/
+
+  /*
+  // Init
+  @override
+  void initState()
+  {
+    page_calories_update();
+    super.initState();
+  }
+
+  Future<void> page_calories_update() async
+  {
+    List<CalorieData> data_calories_result = await database_calorl_retrive();
+
+    setState(()
+    {
+      data_calories_copy = data_calories_result;
+    }
+    );
+  }*/
 
   // Main app UI
   @override
@@ -163,6 +185,7 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
               SizedBox(height:16),
               Text("Recent", style: style_titlelarge),
               SizedBox(height:8),
+              /*
               Card
               (
                 child: Padding
@@ -184,6 +207,7 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
                   )
                 )
               ),
+              */
               /*
               SizedBox(height:16),
               Text("History", style: style_titlelarge),
