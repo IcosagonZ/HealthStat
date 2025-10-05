@@ -385,7 +385,7 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
             ),
             onPressed: ()
             {
-
+              print("data_type_selected");
             },
           )
         ),
