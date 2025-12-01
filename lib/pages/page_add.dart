@@ -38,7 +38,7 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
     "Calorie",
     "Disease",
     "Height",
-    //"Journal", journal could have seperate page
+    //"Journal", journal is in seperate page
     "Mood",
     "Sports",
     "Weight",
@@ -102,6 +102,10 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
     //debugPrint(widget.data_type);
     data_type_selected = widget.data_type;
     tab_type_goto(widget.data_type);
+
+    // Set default date and time as current
+    data_time_selected = TimeOfDay.now();
+    data_date_selected = DateTime.now();
   }
 
   @override

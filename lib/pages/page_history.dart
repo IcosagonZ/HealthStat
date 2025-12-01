@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
-//import 'package:fl_chart/fl_chart.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import 'page_overview.dart';
+import '../data/database.dart';
+
+//import 'package:fl_chart/fl_chart.dart';
 //import '../components/card_graph.dart';
 
 class Page_History extends StatefulWidget
@@ -41,6 +42,32 @@ class _Page_HistoryState extends State<Page_History>
     final style_titlelarge = text_theme.titleLarge;
     final style_titlemedium = text_theme.titleMedium;
     final style_titlesmall = text_theme.titleSmall;
+
+    String data_mode = "Journal";
+
+    List<JournalData> data_journal_copy = [];
+
+    Future<void> page_journal_update() async
+    {
+      List<JournalData> data_journal_result = await database_journal_retrive();
+
+      setState(()
+      {
+        data_journal_copy = data_journal_result;
+      }
+      );
+    }
+
+    // Init
+    @override
+    void initState()
+    {
+      if(data_mode=="Journal")
+      {
+        page_journal_update();
+      }
+      super.initState();
+    }
 
     /*
     final List<FlSpot> graph_data_mood =

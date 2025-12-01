@@ -76,7 +76,7 @@ class _Page_OverviewState extends State<Page_Overview>
               ));
             }
           ),
-          /*
+
           IconButton
           (
             icon: Icon(Symbols.history),
@@ -90,7 +90,6 @@ class _Page_OverviewState extends State<Page_Overview>
               ));
             }
           ),
-          */
 
           IconButton
           (
@@ -330,7 +329,7 @@ class _Page_OverviewState extends State<Page_Overview>
 
                 Text("Overview", style: style_titlelarge),
                 SizedBox(height: 4),
-                Text("Looking good", style: style_displaysmall),
+                Text("Good", style: style_displaysmall),
                 ],
               ),
             ),
