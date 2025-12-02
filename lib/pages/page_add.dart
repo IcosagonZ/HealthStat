@@ -97,18 +97,13 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
     }
   }
 
-  // TAB LOGIC VARIABLES
-  late TabController tab_controller_type;
-
   @override
   void initState()
   {
     super.initState();
-    tab_controller_type = TabController(length: data_types.length, vsync: this);
 
     //debugPrint(widget.data_type);
     data_type_selected = widget.data_type;
-    tab_type_goto(widget.data_type);
 
     // Set default date and time as current
     data_time_selected = TimeOfDay.now();
@@ -118,67 +113,7 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
   @override
   void dispose()
   {
-    tab_controller_type.dispose();
     super.dispose();
-  }
-
-  void tab_type_goto_index(int index)
-  {
-    tab_controller_type.animateTo(index);
-  }
-
-  void tab_type_goto(String? name)
-  {
-    // Assuming tabs are indexed in alphabetical order
-
-    switch (name)
-    {
-      case "Calorie":
-        visibility_gridbox = true;
-        visibility_height = false;
-        visibility_weight = false;
-        tab_type_goto_index(0);
-        break;
-      case "Disease":
-        visibility_gridbox = true;
-        visibility_height = false;
-        visibility_weight = false;
-        tab_type_goto_index(1);
-        break;
-      case "Height":
-        visibility_gridbox = false;
-        visibility_height = true;
-        visibility_weight = false;
-        tab_type_goto_index(2);
-        break;
-      /*case "Journal":
-        visibility_gridbox = true;
-        visibility_height = false;
-        visibility_weight = false;
-        tab_type_goto_index(3);
-        break;
-      */
-      case "Mood":
-        visibility_gridbox = true;
-        visibility_height = false;
-        visibility_weight = false;
-        tab_type_goto_index(3);
-        break;
-      case "Sports":
-        visibility_gridbox = true;
-        visibility_height = false;
-        visibility_weight = false;
-        tab_type_goto_index(4);
-        break;
-      case "Weight":
-        visibility_gridbox = false;
-        visibility_height = false;
-        visibility_weight = true;
-        tab_type_goto_index(5);
-        break;
-      default:
-        debugPrint("ADD DATA -> Invalid data type tab requested");
-    }
   }
 
   // Main app UI
@@ -254,7 +189,6 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
                       {
                         data_type_selected = newValue;
                         //debugPrint(data_type_selected);
-                        tab_type_goto(data_type_selected);
                       }
                       );
                     },
