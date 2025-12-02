@@ -4,6 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'page_overview.dart';
 
 import '../components/card_buttongrid.dart';
+import '../components/card_buttonlist.dart';
 import '../components/card_journal_full.dart';
 
 // Data libraries
@@ -45,6 +46,12 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
   ];
 
   String? data_type_selected;
+
+  // Dropdown variables for other dropdowns
+  String? data_food_selected;
+  String? data_mood_selected;
+  String? data_activity_selected;
+  String? data_disease_selected;
 
   // Time picker variables
   TimeOfDay? data_time_selected;
@@ -200,6 +207,20 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
     final style_titlemedium = text_theme.titleMedium;
     final style_titlesmall = text_theme.titleSmall;
 
+    // Body measurement variables
+    final textfield_body_height_controller = TextEditingController();
+    final textfield_body_weight_controller = TextEditingController();
+
+    // Food variables
+    final textfield_food_quantity_controller = TextEditingController();
+    final textfield_food_weight_controller = TextEditingController();
+    final textfield_food_calories_controller = TextEditingController();
+
+    // Activity variables
+    final textfield_activity_duration_hours_controller = TextEditingController();
+    final textfield_activity_duration_mins_controller = TextEditingController();
+    final textfield_activity_calories_controller = TextEditingController();
+
     return Scaffold
     (
       appBar: AppBar
@@ -219,7 +240,9 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
               (
                 children:
                 [
-                  Text("Data type"),
+                  Expanded(
+                    child: Text("Data type")
+                  ),
                   SizedBox(width: 16),
                   DropdownButton<String>
                   (
@@ -252,17 +275,21 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
 
               // Height field
               Visibility(
-                visible: visibility_height,
+                visible: data_type_selected=="Height",
                 child: Row
                 (
                   children:
                   [
-                    Text("Height"),
+                    Expanded(
+                      child: Text("Height")
+                    ),
                     SizedBox(width: 16),
                     SizedBox(
                       width: 100,
                       child: TextField(
-                        decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Height"),
+                        controller: textfield_body_height_controller,
+                        textAlign: TextAlign.right,
+                        decoration: InputDecoration(border: UnderlineInputBorder()),
                       ),
                     ),
                     SizedBox(width: 16),
@@ -273,17 +300,21 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
 
               // Weight field
               Visibility(
-                visible: visibility_weight,
+                visible: data_type_selected=="Weight",
                 child: Row
                 (
                   children:
                   [
-                    Text("Weight"),
+                    Expanded(
+                      child: Text("Weight")
+                    ),
                     SizedBox(width: 16),
                     SizedBox(
                       width: 100,
                       child: TextField(
-                        decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Weight"),
+                        controller: textfield_body_weight_controller,
+                        textAlign: TextAlign.right,
+                        decoration: InputDecoration(border: UnderlineInputBorder()),
                       ),
                     ),
                     SizedBox(width: 16),
@@ -292,42 +323,275 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
                 ),
               ),
 
+              // Calories
               Visibility(
-                visible: visibility_gridbox,
-                child: SizedBox
+                visible: data_type_selected=="Calorie",
+                child: Column
                 (
-                  height: 300,
-                  child: TabBarView
-                  (
-                    controller: tab_controller_type,
-                    children:
-                    [
-                      Center(child:
-                        CardButtonGrid(heading: "Calorie", data_values: data_food)
-                      ),
-                      Center(child:
-                        CardButtonGrid(heading: "Disease", data_values: data_disease)
-                      ),
-                      Center(child:
-                        Text("Height")
-                      ),
-                      /* journal could have seperate page
-                      Center(child:
-                        CardJournalFull(heading: "Add note"),
-                      ),
-                      */
-                      Center(child:
-                        CardButtonGrid(heading: "Mood", data_values: data_mood)
-                      ),
-                      Center(child:
-                        CardButtonGrid(heading: "Sports", data_values: data_activities)
-                      ),
-                      Center(child:
-                        Text("Weight")
-                      ),
-                    ],
-                  )
-                ),
+                  children: [
+                    Row
+                    (
+                      children:
+                      [
+                        Expanded(
+                          child: Text("Calorie")
+                        ),
+                        SizedBox(width: 16),
+                        DropdownButton<String>
+                        (
+                          hint: Text("Select food item"),
+                          value: data_food_selected,
+                          onChanged: (String? newValue)
+                          {
+                            setState(()
+                            {
+                              data_food_selected = newValue;
+                            });
+                          },
+                          items: data_food.map<DropdownMenuItem<String>>((String data_food_item){
+                            return DropdownMenuItem<String>
+                            (
+                              value: data_food_item,
+                              child: Text(data_food_item),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    Row
+                    (
+                      children:
+                      [
+                        Expanded(
+                          child: Text("Quantity")
+                        ),
+                        SizedBox(width: 16),
+                        SizedBox(
+                          width: 50,
+                          child: TextField(
+                            controller: textfield_food_quantity_controller,
+                            textAlign: TextAlign.right,
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(),
+                            )
+                          )
+                        )
+                      ]
+                    ),
+                    SizedBox(height: 16),
+                    Row
+                    (
+                      children:
+                      [
+                        Expanded(
+                          child: Text("Weight")
+                        ),
+                        SizedBox(width: 16),
+                        SizedBox(
+                          width: 50,
+                          child: TextField(
+                            controller: textfield_food_weight_controller,
+                            textAlign: TextAlign.right,
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(),
+                            )
+                          )
+                        ),
+                      Text("g")
+                      ]
+                    ),
+                    SizedBox(height: 16),
+                    Row
+                    (
+                      children:
+                      [
+                        Expanded(
+                          child: Text("Calories")
+                        ),
+                        SizedBox(width: 16),
+                        SizedBox(
+                          width: 50,
+                          child: TextField(
+                            controller: textfield_food_calories_controller,
+                            textAlign: TextAlign.right,
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(),
+                            )
+                          )
+                        ),
+                        Text("cal")
+                      ]
+                    ),
+                  ],
+                 )
+              ),
+
+              // Disease
+              Visibility(
+                visible: data_type_selected=="Disease",
+                child: Row
+                (
+                  children:
+                  [
+                    Expanded(
+                      child: Text("Symptom")
+                    ),
+                    SizedBox(width: 16),
+                    DropdownButton<String>
+                    (
+                      hint: Text("Select symptom"),
+                      value: data_disease_selected,
+                      onChanged: (String? newValue)
+                      {
+                        setState(()
+                        {
+                          data_disease_selected = newValue;
+                        });
+                      },
+                      items: data_disease.map<DropdownMenuItem<String>>((String data_disease_item){
+                        return DropdownMenuItem<String>
+                        (
+                          value: data_disease_item,
+                          child: Text(data_disease_item),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                )
+              ),
+
+              // Mood
+              Visibility(
+                visible: data_type_selected=="Mood",
+                child: Row
+                (
+                  children:
+                  [
+                    Expanded(
+                      child: Text("Mood")
+                    ),
+                    SizedBox(width: 16),
+                    DropdownButton<String>
+                    (
+                      hint: Text("Select mood"),
+                      value: data_mood_selected,
+                      onChanged: (String? newValue)
+                      {
+                        setState(()
+                        {
+                          data_mood_selected = newValue;
+                        });
+                      },
+                      items: data_mood.map<DropdownMenuItem<String>>((String data_mood_item){
+                        return DropdownMenuItem<String>
+                        (
+                          value: data_mood_item,
+                          child: Text(data_mood_item),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                 )
+              ),
+
+              // Sports
+              Visibility(
+                visible: data_type_selected=="Sports",
+                child: Column
+                (
+                  children:[
+                    Row(
+                      children:
+                      [
+                        Expanded(
+                          child: Text("Activity")
+                        ),
+                        SizedBox(width: 16),
+                        DropdownButton<String>
+                        (
+                          hint: Text("Select sports"),
+                          value: data_activity_selected,
+                          onChanged: (String? newValue)
+                          {
+                            setState(()
+                            {
+                              data_activity_selected = newValue;
+                            });
+                          },
+                          items: data_activities.map<DropdownMenuItem<String>>((String data_activity_item){
+                            return DropdownMenuItem<String>
+                            (
+                              value: data_activity_item,
+                              child: Text(data_activity_item),
+                            );
+                          }).toList(),
+                        ),
+                      ]
+                    ),
+                    Row(
+                      children:
+                      [
+                        Expanded(
+                          child: Text("Duration")
+                        ),
+                        SizedBox(width: 16),
+
+                        SizedBox(
+                          width: 20,
+                          child: TextField(
+                            controller: textfield_activity_duration_hours_controller,
+                            textAlign: TextAlign.center,
+                            maxLength: 2,
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(),
+                              counterText: '',
+                            )
+                          )
+                        ),
+                        SizedBox(width: 4),
+                        Text("hrs"),
+
+                        SizedBox(width: 8),
+
+                        SizedBox(
+                          width: 20,
+                          child: TextField(
+                            controller: textfield_activity_duration_mins_controller,
+                            textAlign: TextAlign.center,
+                            maxLength: 2,
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(),
+                              counterText: '',
+                            )
+                          )
+                        ),
+                        SizedBox(width: 4),
+                        Text("mins"),
+                      ]
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text("Calories")
+                        ),
+
+                        SizedBox(width: 16),
+
+                        SizedBox(
+                          width: 50,
+                          child: TextField(
+                            controller: textfield_activity_calories_controller,
+                            textAlign: TextAlign.right,
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(),
+                            )
+                          )
+                        ),
+                      ]
+                    )
+                  ],
+                 ),
               ),
 
               SizedBox(height: 16),
@@ -336,7 +600,9 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
               (
                 children:
                 [
-                  Text("Time"),
+                  Expanded(
+                    child: Text("Time")
+                  ),
                   SizedBox(width: 16),
                   ElevatedButton
                   (
@@ -357,7 +623,9 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
               (
                 children:
                 [
-                  Text("Date"),
+                  Expanded(
+                    child: Text("Date")
+                  ),
                   SizedBox(width: 16),
                   ElevatedButton
                   (
@@ -389,7 +657,39 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
             ),
             onPressed: ()
             {
-              print("data_type_selected");
+              print(data_type_selected);
+              print(data_time_selected);
+              print(data_date_selected);
+              if(data_type_selected=="Height")
+              {
+                print(textfield_body_height_controller.text);
+              }
+              if(data_type_selected=="Weight")
+              {
+                print(textfield_body_weight_controller.text);
+              }
+              if(data_type_selected=="Disease")
+              {
+                print(data_disease_selected);
+              }
+              if(data_type_selected=="Mood")
+              {
+                print(data_mood_selected);
+              }
+              if(data_type_selected=="Calorie")
+              {
+                print(data_food_selected);
+                print(textfield_food_quantity_controller.text);
+                print(textfield_food_weight_controller.text);
+                print(textfield_food_calories_controller.text);
+              }
+              if(data_type_selected=="Sports")
+              {
+                print(data_activity_selected);
+                print(textfield_activity_calories_controller.text);
+                print(textfield_activity_duration_hours_controller.text);
+                print(textfield_activity_duration_mins_controller.text);
+              }
             },
           )
         ),
