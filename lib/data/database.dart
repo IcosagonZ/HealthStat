@@ -140,6 +140,17 @@ Future<List<Map<String, dynamic>>> database_read(String query) async
   return database_result;
 }
 
+// TIMELINE
+class TimelineData
+{
+  int id;
+  String heading;
+  String type;
+  DateTime creation_time;
+  
+  TimelineData(this.id, this.heading, this.type, this.creation_time);
+}
+
 // JOURNAL
 class JournalData
 {
@@ -722,9 +733,9 @@ Future<void> database_symptoms_add
     "jid":jid,
     "symptom":symptom,
     "intensity":intensity,
-    "from_duration":from_duration,
-    "to_duration":to_duration,
-    "is_resolved":is_resolved,
+    "from_duration":from_iso,
+    "to_duration":to_iso,
+    "resolved":is_resolved,
     "creation_time":creation_iso,
   };
 

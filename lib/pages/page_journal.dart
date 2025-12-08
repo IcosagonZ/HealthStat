@@ -19,6 +19,7 @@ class Page_Journal extends StatefulWidget
 
 class _Page_JournalState extends State<Page_Journal>
 {
+  List<TimelineData> data_timeline = [];
   List<JournalData> data_journal_copy = [];
 
   // Init

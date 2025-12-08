@@ -636,7 +636,17 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
               }
               if(data_type_selected=="Disease")
               {
-                print(data_disease_selected);
+                String _data_disease_selected = data_disease_selected!;
+                database_symptoms_add(
+                  0,
+                  0,
+                  _data_disease_selected,
+                  0, // add controls
+                  date_data_time, // change this, add controls
+                  date_data_time, // change this, add controls
+                  0, // add controls
+                  date_data_time
+                );
               }
               if(data_type_selected=="Mood")
               {
