@@ -13,6 +13,9 @@ import '../data/data_food.dart';
 import '../data/data_mood.dart';
 import '../data/data_disease.dart';
 
+// Database library
+import '../data/database.dart';
+
 class Page_AddData extends StatefulWidget
 {
   final String data_type;
@@ -76,6 +79,7 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
 
   // Date picker variables
   DateTime? data_date_selected;
+  DateTime date_data_time = DateTime.now();
 
   Future<void> data_date_select(BuildContext context) async
   {
@@ -453,7 +457,7 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
                               data_activity_selected = newValue;
                             });
                           },
-                          items: data_activities.map<DropdownMenuItem<String>>((String data_activity_item){
+                          items: data_activities_list.map<DropdownMenuItem<String>>((String data_activity_item){
                             return DropdownMenuItem<String>
                             (
                               value: data_activity_item,
@@ -592,15 +596,43 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
             onPressed: ()
             {
               print(data_type_selected);
-              print(data_time_selected);
+              //print(data_time_selected);
+
+              date_data_time = DateTime(
+                data_date_selected!.year,
+                data_date_selected!.month,
+                data_date_selected!.day,
+                data_time_selected!.hour,
+                data_time_selected!.minute,
+              );
+
               print(data_date_selected);
+
               if(data_type_selected=="Height")
               {
-                print(textfield_body_height_controller.text);
+                //print(textfield_body_height_controller.text);
+                database_body_add(
+                  0,
+                  0,
+                  "Height",
+                  int.parse(textfield_body_height_controller.text),
+                  "cm",
+                  ["manual"],
+                  date_data_time
+                );
               }
               if(data_type_selected=="Weight")
               {
-                print(textfield_body_weight_controller.text);
+                //print(textfield_body_weight_controller.text);
+                database_body_add(
+                  0,
+                  0,
+                  "Weight",
+                  int.parse(textfield_body_weight_controller.text),
+                  "kg",
+                  ["manual"],
+                  date_data_time
+                );
               }
               if(data_type_selected=="Disease")
               {
@@ -608,7 +640,15 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
               }
               if(data_type_selected=="Mood")
               {
-                print(data_mood_selected);
+                //print(data_mood_selected);
+                String _data_mood_selected = data_mood_selected!;
+                database_moods_add(
+                  0,
+                  0,
+                  _data_mood_selected,
+                  ["manual"],
+                  date_data_time
+                );
               }
               if(data_type_selected=="Calorie")
               {

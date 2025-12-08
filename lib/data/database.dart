@@ -13,7 +13,7 @@ List<String> database_sql_commands =
 [
   "create table if not exists journals (id integer primary key autoincrement, heading text, content text, type text, tags text, creation_time text)",
   "create table if not exists measurements (id integer primary key autoincrement, jid integer, type text, value integer, unit text, tags text, creation_time text)",
-  "create table if not exists moods (id integer primary key autoincrement, jid integer, moods text, tags text, creation_time text)",
+  "create table if not exists moods (id integer primary key autoincrement, jid integer, mood text, tags text, creation_time text)",
   "create table if not exists symptoms (id integer primary key autoincrement, jid integer, symptom text, intensity integer, resolved integer, from_duration text, to_duration text, tags text, creation_time text)",
   "create table if not exists calories (id integer primary key autoincrement, jid integer, item text, qty integer, mass int, calories int, tags text, creation_time text)",
   "create table if not exists activities (id integer primary key autoincrement, jid integer, activity text, type text, calories int, duration int, tags text, extra text, creation_time text)",
@@ -455,11 +455,11 @@ class MoodData
 {
   int id;
   int jid;
-  List<String> moods;
+  String mood;
   List<String> tags;
   DateTime creation_time;
 
-  MoodData(this.id, this.jid, this.moods, this.tags, this.creation_time);
+  MoodData(this.id, this.jid, this.mood, this.tags, this.creation_time);
 }
 
 List<MoodData> data_moods =
@@ -476,8 +476,9 @@ Future<List<MoodData>> database_moods_retrive() async
   {
     int id = row["id"] as int;
     int jid = row["jid"] as int;
-    List<dynamic> moods_dynamic = jsonDecode(row["moods"]) as List<dynamic>;
-    List<String> moods = moods_dynamic.cast<String>();
+    //List<dynamic> moods_dynamic = jsonDecode(row["moods"]) as List<dynamic>;
+    //String moods = moods_dynamic.cast<String>();
+    String mood = row["mood"] as String;
     List<dynamic> tags_dynamic = jsonDecode(row["tags"]) as List<dynamic>;
     List<String> tags = tags_dynamic.cast<String>();
     String creation_time = row["creation_time"] as String;
@@ -486,7 +487,7 @@ Future<List<MoodData>> database_moods_retrive() async
     (
       id,
       jid,
-      moods,
+      mood,
       tags,
       DateTime.parse(creation_time)
     ));
@@ -499,7 +500,7 @@ Future<void> database_moods_add
 (
   int id,
   int jid,
-  List<String> moods,
+  String mood,
   List<String> tags,
   DateTime creation_time
 ) async
@@ -508,12 +509,12 @@ Future<void> database_moods_add
   (
     id,
     jid,
-    moods,
+    mood,
     tags,
     creation_time
   ));
 
-  String moods_json = jsonEncode(moods);
+  //String moods_json = jsonEncode(moods);
   String tags_json = jsonEncode(tags);
   String creation_iso = creation_time.toIso8601String();
 
@@ -522,7 +523,7 @@ Future<void> database_moods_add
   Map<String, dynamic> row =
   {
     "jid":jid,
-    "moods":moods_json,
+    "mood":mood,
     "tags":tags_json,
     "creation_time":creation_iso,
   };
