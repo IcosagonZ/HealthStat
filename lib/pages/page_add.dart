@@ -595,7 +595,7 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
             ),
             onPressed: ()
             {
-              print(data_type_selected);
+              //print(data_type_selected);
               //print(data_time_selected);
 
               date_data_time = DateTime(
@@ -606,7 +606,7 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
                 data_time_selected!.minute,
               );
 
-              print(data_date_selected);
+              //print(data_date_selected);
 
               if(data_type_selected=="Height")
               {
@@ -652,17 +652,34 @@ class _Page_AddDataState extends State<Page_AddData> with SingleTickerProviderSt
               }
               if(data_type_selected=="Calorie")
               {
-                print(data_food_selected);
-                print(textfield_food_quantity_controller.text);
-                print(textfield_food_weight_controller.text);
-                print(textfield_food_calories_controller.text);
+                String _data_food_selected = data_food_selected!;
+                database_calories_add(
+                  0,
+                  0,
+                  _data_food_selected,
+                  int.parse(textfield_food_quantity_controller.text),
+                  int.parse(textfield_food_weight_controller.text),
+                  int.parse(textfield_food_calories_controller.text),
+                  ["manual"],
+                  date_data_time
+                );
               }
               if(data_type_selected=="Sports")
               {
-                print(data_activity_selected);
-                print(textfield_activity_calories_controller.text);
-                print(textfield_activity_duration_hours_controller.text);
-                print(textfield_activity_duration_mins_controller.text);
+                String _data_activity_selected = data_activity_selected!;
+                int duration = (int.parse(textfield_activity_duration_hours_controller.text) * 60) + int.parse(textfield_activity_duration_mins_controller.text);
+                
+                database_activities_add(
+                  0,
+                  0,
+                  _data_activity_selected,
+                  "unspecified",
+                  int.parse(textfield_activity_calories_controller.text),
+                  duration,
+                  ["manual"],
+                  ["none"],
+                  date_data_time
+                );
               }
             },
           )
