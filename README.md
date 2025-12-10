@@ -28,8 +28,8 @@ The user will be able to input various details like calories, weight etc... from
 ## To-do
 
 - [X] Basic UI
-- [ ] Basic functionality (adding data, removing data)
-- [ ] Database storage (in app along with food list)
+- [X] Basic functionality (adding data, removing data)
+- [X] Database storage (in app along with food list)
 - [ ] History with graph
 - [ ] Overview data calculation (like BMI)
 - [ ] AI integration (to generate AI overviews and suggestions)
