@@ -19,6 +19,21 @@ List<String> database_sql_commands =
   "create table if not exists activities (id integer primary key autoincrement, jid integer, activity text, type text, calories int, duration int, tags text, extra text, creation_time text)",
 ];
 
+String database_sql_timeline = '''
+select type, heading, creation_time from journals
+union all
+select type, value || ' ' || unit as heading, creation_time from measurements
+union all
+select 'Mood' as type, mood as heading, creation_time from moods
+union all
+select 'Symptom' as type, symptom as heading, creation_time from symptoms
+union all
+select 'Calories' as type, item as heading, creation_time from calories
+union all
+select 'Activity' as type, activity as heading, creation_time from activities
+order by creation_time desc;
+''';
+
 Future<String> database_path() async
 {
   var database_storage_path = await getDatabasesPath();
@@ -143,12 +158,36 @@ Future<List<Map<String, dynamic>>> database_read(String query) async
 // TIMELINE
 class TimelineData
 {
-  int id;
   String heading;
   String type;
   DateTime creation_time;
   
-  TimelineData(this.id, this.heading, this.type, this.creation_time);
+  TimelineData(this.heading, this.type, this.creation_time);
+}
+
+List<TimelineData> data_timeline = [];
+
+Future<List<TimelineData>> database_timeline_retrive() async
+{
+  data_timeline = [];
+
+  final List<Map<String, dynamic>> database_result = await database_read(database_sql_timeline);
+
+  for (var row in database_result)
+  {
+    String heading = row["heading"].toString();
+    String type = row["type"] as String;
+    String creation_time = row["creation_time"] as String;
+
+    data_timeline.add(TimelineData
+    (
+      heading,
+      type,
+      DateTime.parse(creation_time)
+    ));
+  }
+
+  return data_timeline;
 }
 
 // JOURNAL
@@ -164,7 +203,6 @@ class JournalData
   JournalData(this.id, this.heading, this.content, this.type, this.tags, this.creation_time);
 }
 
-// dummy data
 List<JournalData> data_journal = [];
 
 Future<List<JournalData>> database_journal_retrive() async

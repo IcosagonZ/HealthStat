@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'page_overview.dart';
 import 'page_journal_full.dart';
 
-import '../components/card_journal.dart';
+import '../components/card_timeline.dart';
 import '../data/database.dart';
 
 class Page_Journal extends StatefulWidget
@@ -19,7 +19,7 @@ class Page_Journal extends StatefulWidget
 
 class _Page_JournalState extends State<Page_Journal>
 {
-  List<TimelineData> data_timeline = [];
+  List<TimelineData> data_timeline_copy = [];
   List<JournalData> data_journal_copy = [];
 
   // Init
@@ -32,11 +32,14 @@ class _Page_JournalState extends State<Page_Journal>
 
   Future<void> page_journal_update() async
   {
-    List<JournalData> data_journal_result = await database_journal_retrive();
+    //List<JournalData> data_journal_result = await database_journal_retrive();
+    //List<Map<String, dynamic>> data_timeline_result = await database_read(data_timeline_sql);
+    List<TimelineData> data_timeline_result = await database_timeline_retrive();
 
     setState(()
     {
-      data_journal_copy = data_journal_result;
+      //data_journal_copy = data_journal_result;
+      data_timeline_copy = data_timeline_result;
     }
     );
   }
@@ -101,17 +104,18 @@ class _Page_JournalState extends State<Page_Journal>
             [
               Visibility
               (
-                visible: (data_journal_copy.isNotEmpty),
+                visible: (data_timeline_copy.isNotEmpty),
                 child: ListView
                 (
-                  children: data_journal_copy.map((data)
+                  children: data_timeline_copy.map((data)
                   {
-                    return CardJournal
+                    DateTime data_creation_time = data.creation_time;
+                    return CardTimeline
                     (
                       heading: data.heading,
-                      activity: data.type,
-                      time: DateFormat("hh:mm a").format(data.creation_time),
-                      date: DateFormat("dd/M/yy").format(data.creation_time)
+                      subtitle: data.type,
+                      time: DateFormat("hh:mm a").format(data_creation_time),
+                      date: DateFormat("dd/M/yy").format(data_creation_time)
                     );
                   }
                   ).toList(),
@@ -119,7 +123,7 @@ class _Page_JournalState extends State<Page_Journal>
               ),
               Visibility
               (
-                visible: (data_journal_copy.isEmpty),
+                visible: (data_timeline_copy.isEmpty),
                 child: Center
                 (
                   child: Text("No data"),
