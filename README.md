@@ -4,10 +4,10 @@ Comprehensive health tracker made with Flutter
 
 ## Screenshots
 <p align="center">
-    <img src="assets/screenshot0.png" alt="Screenshot 0" width="200"/>
-    <img src="assets/screenshot1.png" alt="Screenshot 1" width="200"/>
-    <img src="assets/screenshot2.png" alt="Screenshot 2" width="200"/>
-    <img src="assets/screenshot3.png" alt="Screenshot 3" width="200"/>
+    <img src="assets/screenshot0.png" alt="Screenshot 0" width="400"/>
+    <img src="assets/screenshot1.png" alt="Screenshot 1" width="400"/>
+    <img src="assets/screenshot2.png" alt="Screenshot 2" width="400"/>
+    <img src="assets/screenshot3.png" alt="Screenshot 3" width="400"/>
 </p>
 
 ## Features
