@@ -50,7 +50,7 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
   // Measurements data
   List<BodyData> data_measurements_copy = [];
 
-  int data_bmi = 0;
+  double data_bmi = 0;
   int data_height = 0;
   int data_weight = 0;
 
@@ -66,9 +66,27 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
   {
     List<BodyData> data_measurements_result = await database_body_retrive();
 
+    int data_height_result  = await data_body_recent("Height");
+    int data_weight_result  = await data_body_recent("Weight");
+
+    double data_bmi_result = 0;
+
+    if(data_height_result==0 || data_weight_result==0)
+    {
+      data_bmi_result = 0;
+    }
+    else
+    {
+      data_bmi_result = data_weight_result / ((data_height_result/100) * (data_height_result/100));
+    }
+
     setState(()
     {
       data_measurements_copy = data_measurements_result;
+
+      data_bmi = data_bmi_result;
+      data_height = data_height_result;
+      data_weight = data_weight_result;
     }
     );
   }
@@ -170,7 +188,7 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
                                 (
                                   child: Text("Height ")
                                 ),
-                                Text("170 cm")
+                                Text('${data_height} cm')
                               ]
                             ),
                             Row
@@ -181,7 +199,7 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
                                 (
                                   child: Text("Weight ")
                                 ),
-                                Text("57.8 kg")
+                                Text('${data_weight} kg')
                               ]
                             ),
                           ]
@@ -191,7 +209,7 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
                       CircleAvatar
                       (
                         radius: 32,
-                        child: Text("21.4"),
+                        child: Text('${data_bmi.toStringAsFixed(1)}'),
                       )
                     ],
                   )

@@ -54,10 +54,15 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
   Future<void> page_calories_update() async
   {
     List<CalorieData> data_calories_result = await database_calories_retrive();
+    final int calorie_today_result = await data_calories_date(DateTime.now());
+    final int calorie_yesterday_result = await data_calories_date(DateTime.now().subtract(Duration(days: 1)));
 
     setState(()
     {
       data_calories_copy = data_calories_result;
+
+      calorie_today = calorie_today_result;
+      calorie_yesterday = calorie_yesterday_result;
 
       /*
       print(data_calories_copy);
@@ -156,7 +161,7 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
                                 (
                                   child: Text("Consumed today")
                                 ),
-                                Text("1000")
+                                Text('${calorie_today}')
                               ]
                             ),
                             Row
@@ -167,7 +172,7 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
                                 (
                                   child: Text("Consumed yesterday")
                                 ),
-                                Text("1000")
+                                Text('${calorie_yesterday}')
                               ]
                             ),
                             /*
@@ -186,12 +191,13 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
                           ]
                         ),
                       ),
+                      /*
                       SizedBox(width: 16),
                       CircleAvatar
                       (
                         radius: 32,
                         child: Text("78"),
-                      )
+                      )*/
                     ],
                   )
                 )

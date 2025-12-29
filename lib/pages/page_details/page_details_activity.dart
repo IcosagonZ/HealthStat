@@ -53,10 +53,14 @@ class _Page_Details_ActivityState extends State<Page_Details_Activity>
   Future<void> page_activities_update() async
   {
     List<ActivityData> data_activities_result = await database_activities_retrive();
+    final int activity_today_result = await data_activities_date(DateTime.now());
+    final int activity_yesterday_result = await data_activities_date(DateTime.now().subtract(Duration(days: 1)));
 
     setState(()
     {
       data_activities_copy = data_activities_result;
+      activity_today = activity_today_result;
+      activity_yesterday = activity_yesterday_result;
     }
     );
   }
@@ -143,11 +147,23 @@ class _Page_Details_ActivityState extends State<Page_Details_Activity>
                               [
                                 Expanded
                                 (
-                                  child: Text("Calories burned ")
+                                  child: Text("Calories today ")
                                 ),
-                                Text("1000")
+                                Text('${activity_today} cal')
                               ]
                             ),
+                            Row
+                            (
+                              children:
+                              [
+                                Expanded
+                                (
+                                  child: Text("Calories yesterday ")
+                                ),
+                                Text('${activity_yesterday} cal')
+                              ]
+                            ),
+                            /*
                             Row
                             (
                               children:
@@ -170,15 +186,18 @@ class _Page_Details_ActivityState extends State<Page_Details_Activity>
                                 Text("2314 steps")
                               ]
                             ),
+                            */
                           ]
                         ),
                       ),
+                      /*
                       SizedBox(width: 16),
                       CircleAvatar
                       (
                         radius: 32,
                         child: Text("10"),
                       )
+                      */
                     ],
                   )
                 )

@@ -342,6 +342,19 @@ CalorieData database_calories_recent()
   }
 }
 
+Future<int> data_calories_date(DateTime date) async
+{
+  final target_date = date.toIso8601String().substring(0, 10);
+
+  final result = await database_read('''
+  select ifnull(sum(calories), 0) as total
+  from calories
+  where date(creation_time) = '$target_date';
+  ''');
+
+  return (result.first['total'] as int?) ?? 0;
+}
+
 Future<void> database_calories_add
 (
   int id,
@@ -409,6 +422,19 @@ class ActivityData
 List<ActivityData> data_activities =
 [
 ];
+
+Future<int> data_activities_date(DateTime date) async
+{
+  final target_date = date.toIso8601String().substring(0, 10);
+
+  final result = await database_read('''
+  select ifnull(sum(calories), 0) as total
+  from activities
+  where date(creation_time) = '$target_date';
+  ''');
+
+  return (result.first['total'] as int?) ?? 0;
+}
 
 Future<List<ActivityData>> database_activities_retrive() async
 {
@@ -603,6 +629,36 @@ List<BodyData> data_body =
 [
 ];
 
+Future<int> data_body_recent(String type) async
+{
+  final result = await database_read('''
+  select value from measurements
+  where
+  type = '$type'
+  order by creation_time desc
+  limit 1;
+  ''');
+
+  print(result.first['value']);
+
+  return (result.first['value'] as int?) ?? 0;
+}
+
+Future<double> data_body_bmi() async
+{
+  final height = await data_body_recent("Height");
+  final weight = await data_body_recent("weight");
+
+  if(height==0 || weight==0)
+  {
+    return 0;
+  }
+
+  final bmi = (weight / ((height / 100.0) * (height / 100.0)));
+
+  return (bmi as double?) ?? 0;
+}
+
 Future<List<BodyData>> database_body_retrive() async
 {
   data_body = [];
@@ -716,7 +772,8 @@ Future<List<SymptomData>> database_symptoms_retrive() async
     String from_duration = row["from_duration"] as String;
     String to_duration = row["to_duration"] as String;
 
-    int is_resolved = row["is_resolved"] as int;
+    //int is_resolved = row["is_resolved"] as int;
+    int is_resolved = 0;
 
     String creation_time = row["creation_time"] as String;
 
