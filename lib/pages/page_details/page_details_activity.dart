@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
-
+import 'package:intl/intl.dart';
 //import 'package:fl_chart/fl_chart.dart';
 //import '../../components/card_graph.dart';
 
 import '../page_overview.dart';
 import '../page_add.dart';
 
+import '../../components/card_timeline.dart';
+
+import "../../data/database.dart";
 
 class Page_Details_Activity extends StatefulWidget
 {
@@ -33,6 +36,30 @@ class _Page_Details_ActivityState extends State<Page_Details_Activity>
     FlSpot(7, 1847),
   ];
   */
+
+  // Activity data
+  List<ActivityData> data_activities_copy = [];
+  int activity_today = 0;
+  int activity_yesterday = 0;
+
+  // Init
+  @override
+  void initState()
+  {
+    page_activities_update();
+    super.initState();
+  }
+
+  Future<void> page_activities_update() async
+  {
+    List<ActivityData> data_activities_result = await database_activities_retrive();
+
+    setState(()
+    {
+      data_activities_copy = data_activities_result;
+    }
+    );
+  }
 
   // Main app UI
   @override
@@ -159,17 +186,46 @@ class _Page_Details_ActivityState extends State<Page_Details_Activity>
               SizedBox(height:16),
               Text("Recent", style: style_titlelarge),
               SizedBox(height:8),
-              Card
+              Padding
               (
-                child: Padding
+                padding: EdgeInsets.all(1),
+                child: Stack
                 (
-                  padding: EdgeInsets.all(4),
-                  child: ListTile
-                  (
-                    title: Text("Walking"),
-                    subtitle: Text("2450 calories"),
-                    trailing: Icon(Symbols.directions_walk)
-                  )
+                  children:
+                  [
+                    SizedBox(
+                      height: 120,
+                      child: Visibility
+                      (
+                        visible: (data_activities_copy.isNotEmpty),
+                        child: ListView
+                        (
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          children: data_activities_copy.map((data)
+                          {
+                            DateTime data_creation_time = data.creation_time;
+                            return CardTimeline
+                            (
+                              heading: '${data.calories} cal',
+                              subtitle: data.activity,
+                              time: DateFormat("hh:mm a").format(data_creation_time),
+                              date: DateFormat("dd/M/yy").format(data_creation_time)
+                            );
+                          }
+                          ).toList(),
+                        ),
+                      ),
+                    ),
+                    Visibility
+                    (
+                      visible: (data_activities_copy.isEmpty),
+                      child: Center
+                      (
+                        child: Text("No data"),
+                      )
+                    )
+                  ]
                 )
               ),
               /*

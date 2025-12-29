@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import 'package:intl/intl.dart';
 //import 'package:fl_chart/fl_chart.dart';
 //import '../../components/card_graph.dart';
 
 import '../page_overview.dart';
 import '../page_add.dart';
+
+import '../../components/card_timeline.dart';
 
 import "../../data/database.dart";
 
@@ -36,11 +39,10 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
   */
 
   // Calorie data
-  /*
   List<CalorieData> data_calories_copy = [];
-  CalorieData calorie_recent;*/
+  int calorie_today = 0;
+  int calorie_yesterday = 0;
 
-  /*
   // Init
   @override
   void initState()
@@ -51,14 +53,24 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
 
   Future<void> page_calories_update() async
   {
-    List<CalorieData> data_calories_result = await database_calorl_retrive();
+    List<CalorieData> data_calories_result = await database_calories_retrive();
 
     setState(()
     {
       data_calories_copy = data_calories_result;
+
+      /*
+      print(data_calories_copy);
+
+      for(var data in data_calories_copy)
+      {
+        print(data.item);
+        print(data.calories);
+        print(data.creation_time);
+      }*/
     }
     );
-  }*/
+  }
 
   // Main app UI
   @override
@@ -142,7 +154,7 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
                               [
                                 Expanded
                                 (
-                                  child: Text("Calories consumed ")
+                                  child: Text("Consumed today")
                                 ),
                                 Text("1000")
                               ]
@@ -153,11 +165,12 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
                               [
                                 Expanded
                                 (
-                                  child: Text("Calories needed ")
+                                  child: Text("Consumed yesterday")
                                 ),
                                 Text("1000")
                               ]
                             ),
+                            /*
                             Row
                             (
                               children:
@@ -169,6 +182,7 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
                                 Text("Maintain")
                               ]
                             ),
+                            */
                           ]
                         ),
                       ),
@@ -185,29 +199,45 @@ class _Page_Details_CaloriesState extends State<Page_Details_Calories>
               SizedBox(height:16),
               Text("Recent", style: style_titlelarge),
               SizedBox(height:8),
-              /*
-              Card
+              Padding
               (
-                child: Padding
+                padding: EdgeInsets.all(1),
+                child: Stack
                 (
-                  padding: EdgeInsets.all(4),
-                  child: ListTile
-                  (
-                    title: Text(calorie_recent.item.toString()),
-                    subtitle: Row
+                  children:
+                  [
+                      Visibility
+                      (
+                        visible: (data_calories_copy.isNotEmpty),
+                        child: ListView
+                        (
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          children: data_calories_copy.map((data)
+                          {
+                            DateTime data_creation_time = data.creation_time;
+                            return CardTimeline
+                            (
+                              heading: '${data.calories} cal',
+                              subtitle: data.item,
+                              time: DateFormat("hh:mm a").format(data_creation_time),
+                              date: DateFormat("dd/M/yy").format(data_creation_time)
+                            );
+                          }
+                          ).toList(),
+                        ),
+                      ),
+                    Visibility
                     (
-                      children:
-                      [
-                        Text(calorie_recent.calories.toString() + " calories"),
-                        SizedBox(width: 8),
-                        Text(calorie_recent.quantity.toString() + " x"),
-                      ]
-                    ),
-                    trailing: Icon(Symbols.cake)
-                  )
+                      visible: (data_calories_copy.isEmpty),
+                      child: Center
+                      (
+                        child: Text("No data"),
+                      )
+                    )
+                  ]
                 )
               ),
-              */
               /*
               SizedBox(height:16),
               Text("History", style: style_titlelarge),

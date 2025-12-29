@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:intl/intl.dart';
 
 //import 'package:fl_chart/fl_chart.dart';
 import '../../components/card_graph.dart';
 
 import '../page_overview.dart';
 import '../page_add.dart';
+
+import '../../components/card_timeline.dart';
+
+import "../../data/database.dart";
 
 class Page_Details_MentalHealth extends StatefulWidget
 {
@@ -31,6 +36,28 @@ class _Page_Details_MentalHealthState extends State<Page_Details_MentalHealth>
     FlSpot(7, 7),
   ];
   */
+
+  // Mood data
+  List<MoodData> data_moods_copy = [];
+
+  // Init
+  @override
+  void initState()
+  {
+    page_mood_update();
+    super.initState();
+  }
+
+  Future<void> page_mood_update() async
+  {
+    List<MoodData> data_moods_result = await database_moods_retrive();
+
+    setState(()
+    {
+      data_moods_copy = data_moods_result;
+    }
+    );
+  }
 
   // Main app UI
   @override
@@ -101,10 +128,49 @@ class _Page_Details_MentalHealthState extends State<Page_Details_MentalHealth>
                   trailing: Icon(Symbols.cognition_2),
                 ),
               ),
-              /*
               SizedBox(height:16),
               Text("History", style: style_titlelarge),
               SizedBox(height:8),
+              Padding
+              (
+                padding: EdgeInsets.all(1),
+                child: Stack
+                (
+                  children:
+                  [
+                    Visibility
+                    (
+                      visible: (data_moods_copy.isNotEmpty),
+                      child: ListView
+                      (
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: data_moods_copy.map((data)
+                        {
+                          DateTime data_creation_time = data.creation_time;
+                          return CardTimeline
+                          (
+                            heading: ' ',
+                            subtitle: data.mood,
+                            time: DateFormat("hh:mm a").format(data_creation_time),
+                            date: DateFormat("dd/M/yy").format(data_creation_time)
+                          );
+                        }
+                        ).toList(),
+                      ),
+                    ),
+                    Visibility
+                    (
+                      visible: (data_moods_copy.isEmpty),
+                      child: Center
+                      (
+                        child: Text("No data"),
+                      )
+                    )
+                  ]
+                )
+              ),
+              /*
               // Sample data
               CardGraph
               (

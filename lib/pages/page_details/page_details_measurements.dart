@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:intl/intl.dart';
 
-import 'package:fl_chart/fl_chart.dart';
+//import 'package:fl_chart/fl_chart.dart';
 import '../../components/card_graph.dart';
 
 import '../page_overview.dart';
 import '../page_add.dart';
+
+import '../../components/card_timeline.dart';
+
+import "../../data/database.dart";
 
 class Page_Details_Measurements extends StatefulWidget
 {
@@ -40,7 +45,33 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
     FlSpot(5, 170),
     FlSpot(6, 170),
     FlSpot(7, 170),
-  ];*/
+    ];*/
+
+  // Measurements data
+  List<BodyData> data_measurements_copy = [];
+
+  int data_bmi = 0;
+  int data_height = 0;
+  int data_weight = 0;
+
+  // Init
+  @override
+  void initState()
+  {
+    page_measurements_update();
+    super.initState();
+  }
+
+  Future<void> page_measurements_update() async
+  {
+    List<BodyData> data_measurements_result = await database_body_retrive();
+
+    setState(()
+    {
+      data_measurements_copy = data_measurements_result;
+    }
+    );
+  }
 
   // Main app UI
   @override
@@ -166,10 +197,53 @@ class _Page_Details_MeasurementsState extends State<Page_Details_Measurements>
                   )
                 )
               ),
-              /*
+
               SizedBox(height:16),
-              Text("History", style: style_titlelarge),
+              Text("Recent", style: style_titlelarge),
               SizedBox(height:8),
+              Padding
+              (
+                padding: EdgeInsets.all(1),
+                child: Stack
+                (
+                  children:
+                  [
+                    SizedBox(
+                      height: 120,
+                      child: Visibility
+                      (
+                        visible: (data_measurements_copy.isNotEmpty),
+                        child: ListView
+                        (
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          children: data_measurements_copy.map((data)
+                          {
+                            DateTime data_creation_time = data.creation_time;
+                            return CardTimeline
+                            (
+                              heading: '${data.value} ${data.unit}',
+                              subtitle: data.type,
+                              time: DateFormat("hh:mm a").format(data_creation_time),
+                              date: DateFormat("dd/M/yy").format(data_creation_time)
+                            );
+                          }
+                          ).toList(),
+                        ),
+                      ),
+                    ),
+                    Visibility
+                    (
+                      visible: (data_measurements_copy.isEmpty),
+                      child: Center
+                      (
+                        child: Text("No data"),
+                      )
+                    )
+                  ]
+                )
+              ),
+              /*
               // Sample data
               CardGraph
               (

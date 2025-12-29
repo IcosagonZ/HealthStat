@@ -300,7 +300,7 @@ Future<List<CalorieData>> database_calories_retrive() async
 {
   data_calories = [];
 
-  final List<Map<String, dynamic>> database_result = await database_read("select * from calories");
+  final List<Map<String, dynamic>> database_result = await database_read("select * from calories order by creation_time desc;");
 
   for (var row in database_result)
   {
@@ -519,7 +519,7 @@ Future<List<MoodData>> database_moods_retrive() async
 {
   data_moods = [];
 
-  final List<Map<String, dynamic>> database_result = await database_read("select * from journals");
+  final List<Map<String, dynamic>> database_result = await database_read("select * from moods order by creation_time desc;");
 
   for (var row in database_result)
   {
@@ -607,7 +607,7 @@ Future<List<BodyData>> database_body_retrive() async
 {
   data_body = [];
 
-  final List<Map<String, dynamic>> database_result = await database_read("select * from journals");
+  final List<Map<String, dynamic>> database_result = await database_read("select * from measurements order by creation_time desc;");
 
   for (var row in database_result)
   {
@@ -704,7 +704,7 @@ Future<List<SymptomData>> database_symptoms_retrive() async
 {
   data_symptoms = [];
 
-  final List<Map<String, dynamic>> database_result = await database_read("select * from journals");
+  final List<Map<String, dynamic>> database_result = await database_read("select * from symptoms order by creation_time desc;");
 
   for (var row in database_result)
   {

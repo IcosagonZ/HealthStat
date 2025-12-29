@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:intl/intl.dart';
 
 import '../page_overview.dart';
 import '../page_add.dart';
+
+import '../../components/card_timeline.dart';
+
+import "../../data/database.dart";
 
 class Page_Details_Disease extends StatefulWidget
 {
@@ -16,6 +21,29 @@ class Page_Details_Disease extends StatefulWidget
 
 class _Page_Details_DiseaseState extends State<Page_Details_Disease>
 {
+
+  // Symptom data
+  List<SymptomData> data_symptoms_copy = [];
+
+  // Init
+  @override
+  void initState()
+  {
+    page_symptoms_update();
+    super.initState();
+  }
+
+  Future<void> page_symptoms_update() async
+  {
+    List<SymptomData> data_symptoms_result = await database_symptoms_retrive();
+
+    setState(()
+    {
+      data_symptoms_copy = data_symptoms_result;
+    }
+    );
+  }
+
   // Main app UI
   @override
   Widget build(BuildContext context)
@@ -88,30 +116,47 @@ class _Page_Details_DiseaseState extends State<Page_Details_Disease>
               SizedBox(height:16),
               Text("Tracking", style: style_titlelarge),
               SizedBox(height:8),
-              // Sample data
-              Card
+              Padding
               (
-                child: Column
+                padding: EdgeInsets.all(1),
+                child: Stack
                 (
                   children:
                   [
-                    ListTile
-                    (
-                      title: Text("Cough"),
-                      trailing: Icon(Symbols.ent),
+                    SizedBox(
+                      height: 120,
+                      child: Visibility
+                      (
+                        visible: (data_symptoms_copy.isNotEmpty),
+                        child: ListView
+                        (
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          children: data_symptoms_copy.map((data)
+                          {
+                            DateTime data_creation_time = data.creation_time;
+                            return CardTimeline
+                            (
+                              heading: ' ',
+                              subtitle: data.symptom,
+                              time: DateFormat("hh:mm a").format(data_creation_time),
+                              date: DateFormat("dd/M/yy").format(data_creation_time)
+                            );
+                          }
+                          ).toList(),
+                        ),
+                      ),
                     ),
-                    ListTile
+                    Visibility
                     (
-                      title: Text("Fever"),
-                      trailing: Icon(Symbols.sick),
-                    ),
-                    ListTile
-                    (
-                      title: Text("Cold"),
-                      trailing: Icon(Symbols.sick),
-                    ),
+                      visible: (data_symptoms_copy.isEmpty),
+                      child: Center
+                      (
+                        child: Text("No data"),
+                      )
+                    )
                   ]
-                ),
+                )
               ),
             ],
           ),
